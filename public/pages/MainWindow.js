@@ -20,9 +20,21 @@ function createMainWindow() {
 
     mainWindow.loadURL('http://localhost:3000')
     mainWindow.webContents.openDevTools()
-
+    
     ipcMain.on('minimizeMainWindow', () => {
         mainWindow.minimize()
+    })
+
+    ipcMain.on('maximizeMainWindow', () => {
+        if (mainWindow.isMaximized()) {
+            mainWindow.restore()
+        } else {
+            mainWindow.maximize()
+        }
+    })
+
+    ipcMain.on('closeMainWindow', () => {
+        mainWindow.close()
     })
 
 }

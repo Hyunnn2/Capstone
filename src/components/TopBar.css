@@ -1,42 +1,55 @@
-header {
-  background-color: #333;
-  color: #fff;
-  padding: 8px;
-}
-
 .topBar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.btnContainer {
-  display: flex;
-  align-items: center;
-}
-
-.menuBtn,
-.minimizeBtn,
-.maximizeBtn,
-.closeBtn {
-  background-color: transparent;
-  border: none;
-  color: #fff;
-  font-size: 14px;
-  cursor: pointer;
-  margin-right: 5px;
+    height: 30px;
+    background-color: #333;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .title {
-  font-size: 16px;
-  font-weight: bold;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  margin: 0 auto;
+    -webkit-app-region: drag;
+    width: 100%;
+    font-size: 14px;
+    font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin: 0 auto;
 }
 
-.topBarBtns {
-  display: flex;
-  align-items: center;
+.appIcon {
+    height: 20px;
+    width: 20px;
+    margin: 5px;
+    margin-left: 8px;
+    margin-right: 8px;
+}
+
+.btnContainer {
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.minimizeBtn,
+.maximizeBtn,
+.closeBtn {
+    height: 100%;
+    width: 35px;
+    background-color: transparent;
+    border: none;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.closeBtn:hover {
+    background-color: #ff0000;
+}
+
+.minimizeBtn:hover,
+.maximizeBtn:hover {
+    background-color: #444444;
 }
