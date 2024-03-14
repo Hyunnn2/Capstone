@@ -19,7 +19,11 @@ export default function SideBar() {
     return (
         <div className='SideBar'>
             <SideBarMenu setCurrentComp={setCurrentComp}/>
-            {currentComp !== null && compSellector[currentComp]}
+            {currentComp &&
+                <div className='SideBarComp'>
+                    {currentComp !== null && compSellector[currentComp]}
+                </div>
+            }
         </div>            
     )
 }

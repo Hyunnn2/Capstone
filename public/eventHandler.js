@@ -30,10 +30,10 @@ function activateEventHandler(mainWindow) {
           if (!result.canceled) {
             const selectedDirectory = result.filePaths[0];
             const directoryName = path.basename(selectedDirectory);
-            const files = fs.readdirSync(selectedDirectory);
+            const contents = fs.readdirSync(selectedDirectory);
             return {
                 selectedDirectory: directoryName,
-                files: files
+                contents: contents
             };
           }
         

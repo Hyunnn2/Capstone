@@ -1,22 +1,23 @@
 import { useState, useEffect } from 'react'
 
 import './Explorer.css'
+import Directory from './directory/Directory.js'
 
 
 export default function Explorer() {
     const [selectedDirectory, setSelectedDirectory] = useState(null)
-    const [files, setFiles] = useState(null)
+    const [contents, setContents] = useState(null)
 
     const selectDirectory = async () => {
         const res = await window.electronAPI.openDirectory()
         setSelectedDirectory(res.selectedDirectory)
-        setFiles(res.files)
+        setContents(res.contents)
     }
 
     useEffect(() => {
         console.log(selectedDirectory)
-        console.log(files)
-    }, [selectedDirectory, files])
+        console.log(contents)
+    }, [selectedDirectory, contents])
 
 
     return (
@@ -24,16 +25,7 @@ export default function Explorer() {
             {selectedDirectory === null && (
                 <button className='SelectDirectoryBtn' onClick={selectDirectory}>Select Directory</button>
             )}
-            {selectedDirectory && (
-                <div>
-                    <p>Files in {selectedDirectory}:</p>
-                    <ul>
-                        {files.map((file, index) => (
-                            <li key={index}>{file}</li>
-                        ))}
-                    </ul>
-                </div>
-            )}
+            {selectedDirectory && <Directory directoryName={selectedDirectory} contents={contents}/>}
         </div>
     )
 }
