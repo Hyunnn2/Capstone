@@ -1,0 +1,26 @@
+.SideBarMenu {
+    width: 50px;
+    height: 100%;
+    background-color: #333;
+    border-right: 1px solid #666;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    left: 0;
+}
+
+.SideBarBtn {
+    width: 100%;
+    height: 50px;
+    background-color: #333;
+    border: none;
+    color: #ffffffcc;
+    cursor: pointer;
+    display: flex;
+    align-items: center; /* 요소 상하 정렬 */
+    justify-content: center; /* 요소 좌우 정렬 */
+}
+
+.SideBarBtn:hover {
+    color: #ffffff;
+}

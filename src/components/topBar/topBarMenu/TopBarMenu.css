@@ -1,0 +1,26 @@
+/* Menu */
+.TopBarMenu {
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.MenuBtn {
+    position: relative;
+    width: 35px;
+    height: 20px;
+    background-color: transparent;
+    border: none;
+    border-radius: 3px;
+    color: #ffffffcc;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.MenuBtn:hover {
+    background-color: #111;
+}

@@ -1,0 +1,55 @@
+/* TopBar */
+.TopBar{
+    height: 32px;
+    background-color: #444;
+    border: 1px solid #666;
+    color: #ffffffcc;
+    display: flex;
+    align-items: center;
+}
+
+
+.AppIcon {
+    -webkit-app-region: drag; /* 드래그로 앱 위치 조정 */
+    height: 20px;
+    width: 20px;
+    margin: 5px;
+    margin-left: 8px;
+    margin-right: 8px;
+}
+
+.TopBarTitle {
+    -webkit-app-region: drag; /* 드래그로 앱 위치 조정 */
+    height: 100%;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+    overflow: hidden; /* 요소의 상자를 넘어가는 콘텐츠 숨기기 */
+    text-overflow: ellipsis; /* 텍스트가 넘칠때 (...)로 표시 */
+    white-space: nowrap; /* 줄바꿈 방지 */
+    margin: 0 auto;
+    flex-grow: 1;
+    display: flex; /* 이게 있어야 align-items, justify-content 적용가능? */
+    align-items: center; /* 요소 상하 정렬 */
+    justify-content: center; /* 요소 좌우 정렬 */
+}
+
+.TopBarBtn {
+    height: 100%;
+    width: 35px;
+    background-color: transparent;
+    border: none;
+    color: #ffffffcc;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#MinimizeBtn:hover, 
+#MaximizeBtn:hover {
+    background-color: #ffffff48;
+}
+
+#CloseBtn:hover {
+    background-color: #ff0000;
+}
