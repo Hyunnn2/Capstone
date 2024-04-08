@@ -1,0 +1,6 @@
+.Info {
+    height : 40%;
+    width : 100%;
+    display: flex;
+    flex-direction: row;
+}

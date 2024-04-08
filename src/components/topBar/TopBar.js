@@ -1,5 +1,5 @@
 import './TopBar.css'
-import TopBarMenu from './topBarMenu/TopBarMenu.js';
+import Battery from './battery/Battery.js';
 import Icon from '../../assets/logo192.png'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -24,8 +24,8 @@ export default function TopBar() {
     return (
     <div className='TopBar'>
         <img src={ Icon } alt='App Icon' className='AppIcon' />
-        <TopBarMenu />
-        <label className='TopBarTitle'> My Electron - React Application</label>
+        <Battery />
+        <label className='TopBarTitle'> MyGCS</label>
         <button className='TopBarBtn' id='MinimizeBtn' onClick={minimizeMainWindow}>
             <FontAwesomeIcon icon={faWindowMinimize} size='1x'/>
         </button>
