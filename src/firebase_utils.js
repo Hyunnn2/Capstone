@@ -1,18 +1,20 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, doc, setDoc, getDoc } from "firebase/firestore";
 
+
 // Firebase 설정 및 초기화
 const firebaseConfig = {
-    apiKey: "AIzaSyBH5PzCv5ngtp0shvyH-xZ8xyOdZ8aSXFA",
-    authDomain: "capdrone-55616.firebaseapp.com",
-    projectId: "capdrone-55616",
-    storageBucket: "capdrone-55616.appspot.com",
-    messagingSenderId: "1019199984726",
-    appId: "1:1019199984726:web:3749839ab27ed4d0be17f7",
-    measurementId: "G-WZ9RNCFPRM"
+    apiKey: "AIzaSyDR6lP5eD5ulw0_agUm0qeDoC0s6Q_8FHU",
+    authDomain: "test-82765.firebaseapp.com",
+    projectId: "test-82765",
+    storageBucket: "test-82765.appspot.com",
+    messagingSenderId: "72107612732",
+    appId: "1:72107612732:web:9b272fa31467ff81ad8139",
+    measurementId: "G-5Z3KZLCF45"
   };
  // Firebase 초기화
 const app = initializeApp(firebaseConfig);
+
 
 // Firestore 참조 가져오기
 const db = getFirestore(app);
@@ -35,7 +37,9 @@ export function uploadMarkerLocation(latitude, longitude) {
 export async function fetchDroneState() {
     try {
         const docRef = doc(db, 'Capston', 'state'); // 'Capstone' 컬렉션 내 'state' 문서 참조
+        console.log("123", docRef)
         const docSnap = await getDoc(docRef);
+        console.log("1", docSnap)
         if (docSnap.exists()) {
             return docSnap.data(); // 문서 내용 반환
         } else {

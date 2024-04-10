@@ -26,8 +26,9 @@ const DroneState = () => {
             {droneState ? (
                 <div>
                     <p>altitude: {droneState.altitude}</p>
-                    <p>altitude: {droneState.altitude}</p>
-                    <p>altitude: {droneState.altitude}</p>
+                    <p>roll: {droneState.roll}</p>
+                    <p>yaw: {droneState.yaw}</p>
+                    <p>pitch: {droneState.pitch}</p>
                 </div>
             ) : (
                 <p>Loading drone state...</p>

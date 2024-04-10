@@ -3,7 +3,7 @@ import './Maps.css';
 import mapboxgl from 'mapbox-gl'; 
 
 
-mapboxgl.accessToken = 'pk.eyJ1IjoiYW5zOTM5IiwiYSI6ImNsY3g3dHR4czIwNGszdms2ZDA5eHZtOHIifQ.v1aKMbtU1_vRo4ssSlKCqA';
+mapboxgl.accessToken = 'pk.eyJ1Ijoic3VleWVvbjIyIiwiYSI6ImNsdXBqZno0djBtZW8ybW1uOGo0dnY2Z3AifQ.Kwj0EDyPSHxKsMKaxGWTlw';
 
 const Maps = () => {
 
@@ -87,7 +87,7 @@ const Maps = () => {
     }, []);
     
 
-    return <div id="map" className='Maps'/>;
+    return <div id="map" className='Maps' style={{  }}/>;
 };
 
 export default Maps;
