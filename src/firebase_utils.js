@@ -20,11 +20,12 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
   
   // 클릭한 위치를 Firebase에 업로드하는 함수
-export function uploadMarkerLocation(latitude, longitude) {
+export function uploadMarkerLocation(latitude, longitude, altitude) {
     const docRef = doc(db, "Capston", "map");
     setDoc(docRef, {
         lat: latitude,
-        lon: longitude
+        lon: longitude,
+        alt: altitude
     })
     .then(function() {
       console.log("Marker location uploaded successfully!");

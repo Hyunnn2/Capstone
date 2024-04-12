@@ -4,8 +4,9 @@
     width: 100%;
     height: 80%;
     display: flex;
-    align-items: flex-end; /* 요소를 수직으로 아래쪽으로 정렬 */
     
+    align-items: flex-end;
     white-space: pre-line; /* 텍스트 줄바꿈 적용*/
 }
 /*justify-content: center; /* 요소를 수평으로 가운데로 정렬 */
+/*justify-content: flex-end; align-items: flex-end; /* 요소를 수직으로 아래쪽으로 정렬 */
