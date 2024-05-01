@@ -1,9 +1,7 @@
-.Drone3DViewContainer{
-  width: 25%;
-  height : 100%;
-  background-color: rgb(240, 243, 232);
-  border-top: 1px solid #ccc;
-  font-size: 0.8em;
-  padding: 0;
+/* src/Drone3DView.css */
 
+.Drone3DViewContainer {
+  width: 400px;
+  height: 300px;
+  position: relative;
 }

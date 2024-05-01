@@ -1,3 +1,5 @@
+// electron.js
+
 const { app, BrowserWindow, ipcMain } = require('electron/main')
 const path = require('node:path')
 
@@ -31,7 +33,6 @@ function createMainWindow() {
 
 }
 
-
 app.whenReady().then(() => {
 	createMainWindow()
 
@@ -46,4 +47,9 @@ app.on('window-all-closed', () => {
 	if (process.platform !== 'darwin') {
 		app.quit()
 	}
+})
+
+ipcMain.on('asynchronous-message', (event, arg) => {
+  console.log(arg) // "ping" 출력
+  event.reply('asynchronous-reply', 'pong')
 })
