@@ -1,102 +1,140 @@
-// MapMenu.js
-import React from 'react';
-import mapboxgl from 'mapbox-gl';
-import IconButton from '@mui/material/IconButton';
-import Button from '@mui/material/Button';
-import MenuIcon from '@mui/icons-material/Menu'
-import TextField from '@mui/material/TextField';
-import InputAdornment from '@mui/material/InputAdornment';
-import { uploadMarkerLocation } from '../../../../firebase_utils'
-import './MapMenu.css';
+import * as React from 'react';
+import { Tabs, Tab, Button, Box } from '@mui/material';
+import RoomIcon from '@mui/icons-material/Room';
+import MapIcon from '@mui/icons-material/Map';
+import AutoModeIcon from '@mui/icons-material/AutoMode';
+import CloseIcon from '@mui/icons-material/Close';
+// import './MapMenu.css';
+import SelectModeEvent from '../maps/menucomps/ClickMode'
+import SelectDestinationEvent from './menucomps/ClickMarker';
+import OpenWowdroEvent from './menucomps/ClickWowDro';
 
+// Theme 적용 라이브러리
+import { createTheme, ThemeProvider } from '@mui/material';
 
-const MapMenu = ({ map }) => {
-    const [toggleMenu, setToggleMenu] = React.useState(false)
-    const [selectDestination, setSelectDestination] = React.useState(false)
-    const [destination, setDestination] = React.useState({})
+let theme = createTheme({
+    components: {
+        MuiTabs: {
+            styleOverrides: {
+                root: {
+                    width: '50px',
+                    minWidth: '50px',
+                    height:'60%',
+                    padding: '0'
+                }
+            }
+        },
+        MuiTab: {
+            styleOverrides: {
+                root: {
+                    width: '50px',
+                    minWidth: '50px',
+                    height: '50px',
+                    padding: '0'
+                }
+            }
+        },
+        MuiTouchRipple: {
+            styleOverrides: {
+                root: {
+                    width: '100%',
+                    height: '100%'
+                }
+            }
+        },
+        MuiButton: {
+            styleOverrides: {
+                root: {
+                    minWidth: '24px',
+                    maxWidth: '24px',
+                    minHeight: '24px',
+                    maxHeight: '24px',
+                    marginLeft: '76px',
+                    padding: 0
+                }
+            }
+        },
+        MuiFormControl: {
+            styleOverrides: {
+                root: {
+                    width: '90px',
+                    height: '30px'
+                }
+            },
+        },
+        MuiInputBase: {
+            styleOverrides: {
+                root: {
+                    width: '100%',
+                    height: '100%',
+                }
+            }
+        },
+        MuiTypography: {
+            styleOverrides: {
+                
+            }
+        }        
+    }
+})
 
-
-    const handleButtonClick = () => {
-        setToggleMenu(!toggleMenu);
-    };
-
-    const selectDestinationEvent = () => {
-        console.log('목적지 선택 버튼 클릭')
-        // 목적지 선택 버튼 토글
-        setSelectDestination(!selectDestination)
-    
-        // 맵 클릭 이벤트 리스너 추가
-        // 목적지 선택 버튼이 false일때 맵 클릭 이벤트 리스너를 지워주고 다시 true가되면 이벤트리스너가 추가되는 방식으로 변경되어야한다
-        map.on('click', (e) => {
-            var coordinates = e.lngLat;
-            setDestination(coordinates)
-            new mapboxgl.Marker()
-                .setLngLat(coordinates)
-                .addTo(map)
-                .setPopup(
-                    new mapboxgl.Popup({ offset: 25 })
-                        .setHTML(`<h3>위도: ${coordinates.lat}</h3><p>경도: ${coordinates.lng}</p>`)
-                )
-        });
-    };
-
-    const sendButtonEvent = () => {
-        const latitude = destination.lat;
-        const longitude = destination.lng;
-        const altitude = destination.alt;
-        uploadMarkerLocation(latitude, longitude, altitude);
-        console.log(1); // This should log when the button is clicked
-    };
-
+function TabPanel({ children, value, index, setValue}) {
 
     return (
-        <div className='MapMenu'>
-            <IconButton
-                size="large"
-                edge="start"
-                color="inherit"
-                sx={{ mr: 2 }}
-                onClick={handleButtonClick}
-            >
-                <MenuIcon />
-            </IconButton>
-            {toggleMenu &&
-                <div style={{ position: 'absolute', width: '100%', height: '100%', backgroundColor: 'rgb(255, 255, 255, 0.8)' }}>
-                    <Button variant="contained" onClick={selectDestinationEvent}>목적지 선택</Button>
-                    {selectDestination &&
-                        <>
-                            <TextField
-                                id="standard-basic"
-                                InputProps={{
-                                    startAdornment: <InputAdornment position="start">Alt :</InputAdornment>,
-                                }}
-                                onChange={(event) => {
-                                    destination.alt = parseFloat(event.target.value)
-                                    setDestination(destination)
-                                    console.log(destination)
-                                }}
-                            />
-                            <TextField
-                                id="standard-basic"
-                                InputProps={{
-                                    startAdornment: <InputAdornment position="start">Lat :</InputAdornment>,
-                                }}
-                                value={destination.lat}
-                            />
-                            <TextField
-                                id="standard-basic"
-                                InputProps={{
-                                    startAdornment: <InputAdornment position="start">Lon :</InputAdornment>,
-                                }}
-                                value={destination.lng}
-                            />
-                        </>
-                    }
-                    <Button variant="contained" onClick={sendButtonEvent}>전송</Button>
-                </div>
-            }
+        <div
+            role="tabpanel"
+            id={`vertical-tabpanel-${index}`}
+            aria-labelledby={`vertical-tab-${index}`}
+        >
+            {value === index && (
+                
+                <Box sx={{ bgcolor: 'background.paper', height: '60%', width: 100 }}>
+                    <Button onClick={() => setValue(null)}>
+                        <CloseIcon />
+                    </Button>
+                    {children}
+                </Box>
+            )}
         </div>
     );
-};
+}
 
-export default MapMenu;
+
+export default function VerticalTabs({}) {
+    const [value, setValue] = React.useState(null);
+
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+        console.log(value)
+    };
+
+    
+    return (
+        <ThemeProvider theme={theme}>
+            <Box
+                sx={{ flexGrow: 1, bgcolor: 'transparent', display: 'flex', position: 'relative', width: 150, height: '100%', zIndex: 1 }}
+            >
+                <Tabs
+                    orientation="vertical"
+                    value={value}
+                    onChange={handleChange}
+                    aria-label="Vertical tabs example"
+                    sx={{ borderRight: 1, bgcolor: 'background.paper', borderColor: 'divider', width: 50 }}
+                >
+                    <Tab icon={<RoomIcon />} />
+                    <Tab icon={<AutoModeIcon />} />
+                    <Tab icon={<MapIcon />} />
+                </Tabs>
+                <TabPanel value={value} index={0} setValue={setValue}>
+                    <SelectDestinationEvent />
+                </TabPanel>
+                <TabPanel value={value} index={1} setValue={setValue}>
+                    <SelectModeEvent />
+                </TabPanel>
+                <TabPanel value={value} index={2} setValue={setValue}>
+                    <OpenWowdroEvent />
+                </TabPanel>
+            </Box>
+        </ThemeProvider>
+    );
+}

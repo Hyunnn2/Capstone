@@ -1,6 +1,7 @@
 import './Info.css'
 import DroneState from "./comps/DroneState.js";
-import Drone3DView from "./comps/Drone3DView.js"
+import Drone3DView from "./comps/Drone3DView.js";
+import Streaming from './comps/Streaming.js';
 
 
 export default function Info() {
@@ -9,6 +10,7 @@ export default function Info() {
         <div className='Info'>
             <DroneState/>
             <Drone3DView/>
+            <Streaming/>
         </div>
     )
 }

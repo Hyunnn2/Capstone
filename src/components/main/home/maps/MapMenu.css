@@ -4,3 +4,13 @@
   position: absolute;
   z-index: 1;
 }
+
+.menu-item {
+  width: 200px;
+  height: 100%;
+  
+}
+
+.Home .Maps .MuiButtonBase-root {
+  width: 50px;
+}

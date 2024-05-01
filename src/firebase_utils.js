@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, doc, setDoc, getDoc } from "firebase/firestore";
+import { getFirestore, doc, setDoc, getDoc } from "firebase/firestore";
 
 
 // Firebase 설정 및 초기화
@@ -33,7 +33,20 @@ export function uploadMarkerLocation(latitude, longitude, altitude) {
     .catch(function(error) {
       console.error("Error uploading marker location: ", error);
     });
-  }
+}
+
+export function uploadAutoModeMisson(misson) {
+  const docRef = doc(db, "Capston", "drone");
+  setDoc(docRef, {
+      header: misson
+  })
+  .then(function() {
+    console.log("Misson uploaded successfully!");
+  })
+  .catch(function(error) {
+    console.error("Error uploading marker location: ", error);
+  });
+}
 
 export async function fetchDroneState() {
     try {

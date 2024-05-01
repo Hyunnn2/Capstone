@@ -7,5 +7,6 @@ contextBridge.exposeInMainWorld('electronAPI', {
     closeMainWindow: () => ipcRenderer.send('closeMainWindow'),
     openDirectory: () => ipcRenderer.invoke('openDirectory'),
     searchClick: () => ipcRenderer.send('searchClick'),
-    settingClick: () => ipcRenderer.send('settingClick')
+    settingClick: () => ipcRenderer.send('settingClick'),
+    getwowDroHandler:() => ipcRenderer.invoke('getwowDroHandler')
 })
