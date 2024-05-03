@@ -117,10 +117,10 @@ async function wowDroHandler(){
             const folderName = folder.name[0];
             folderData['folderName'] = folderName;
     
-            if (['구역표시용1', '구역표시용2'].includes(folderName)) {
+            if (['RC 비행장','구역표시용1', '구역표시용2'].includes(folderName)) {
                 // 건너뛰기
                 continue;
-            } else if (['RC 비행장', '초경량비행장치 전용공역(비행가능)'].includes(folderName)) {
+            } else if ([ '초경량비행장치 전용공역(비행가능)'].includes(folderName)) {
                 processFolder(folder, folderData);
             } else {
                 processFolder(folder, folderData);

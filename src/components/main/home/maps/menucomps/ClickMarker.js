@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { createTheme, ThemeProvider, TextField, InputAdornment, Button } from '@mui/material';
 import { uploadMarkerLocation } from '../../../../../firebase_utils';
-import { useMap, Marker } from 'react-map-gl';
+import { useMap } from 'react-map-gl';
 import { useDispatch, useSelector } from 'react-redux';
+
+import { setDestinationLat, setDestinationLng, setDestinationAlt } from '../../../../../redux/reducer/reducer';
 
 let theme = createTheme({
     components: {
@@ -43,21 +45,19 @@ let theme = createTheme({
         },
     }
 })
-const SET_DESTINATION = 'SET_DESTINATION';
-const setDestination = (destination) => ({
-    type: SET_DESTINATION,
-    payload: destination,
-  });
+
 
 const SelectDestinationEvent = () => {
     const { map } = useMap();
     const [clickDestination, setClickDestination] = useState(false)
     const dispatch = useDispatch()
-    const destination = useSelector((state)=>state.destination);
+    const {lat, lng, alt} = useSelector((state)=>state);
 
     const handleMapClick = (e) => {
-        dispatch(setDestination(e.lngLat));
-        
+        const lat = e.lngLat.lat;
+        const lng = e.lngLat.lng;
+        dispatch(setDestinationLat(lat));
+        dispatch(setDestinationLng(lng));
     };
 
     const clickDestinationBtn = () => {
@@ -68,13 +68,14 @@ const SelectDestinationEvent = () => {
     }
 
     const sendButtonEvent = () => {
-        if (destination.lat && destination.lng) {
-            const latitude = destination.lat;
-            const longitude = destination.lng;
-            const altitude = destination.alt;
+        if (lat && lng) {
+            const latitude = lat;
+            const longitude = lng;
+            const altitude = alt;
+            console.log('전송', latitude, longitude, altitude); // This should log when the button is clicked
             uploadMarkerLocation(latitude, longitude, altitude);
             map.off('click', handleMapClick);
-            console.log('전송', destination); // This should log when the button is clicked
+            console.log('click event off')
         } else {
             console.log("목적지를 선택해주세요.");
         }
@@ -95,31 +96,29 @@ const SelectDestinationEvent = () => {
                             startAdornment: <InputAdornment position="start">Alt :</InputAdornment>,
                         }}
                         onChange={(event) => {
-                            dispatch(setDestination({ ...destination, alt: parseFloat(event.target.value) })); // 목적지 altitude 업데이트
+                            dispatch(setDestinationAlt(parseFloat(event.target.value))); // 목적지 altitude 업데이트
                         }}
+                        value={alt}
                     />
                     <TextField
                         id="standard-basic"
                         InputProps={{
                             startAdornment: <InputAdornment position="start">Lat :</InputAdornment>,
                         }}
-                        value={destination.lat}
+                        value={lat}
                     />
                     <TextField
                         id="standard-basic"
                         InputProps={{
                             startAdornment: <InputAdornment position="start">Lon :</InputAdornment>,
                         }}
-                        value={destination.lng}
+                        value={lng}
                     />
                 </>
             }
             <Button variant="contained" onClick={sendButtonEvent}>
                 전송
             </Button>
-            {destination && 
-                <Marker longitude={destination.lng} latitude={destination.lat} color="blue" />
-            }
         </ThemeProvider>
     );
 };

@@ -1,12 +1,21 @@
-import React from 'react'
-import {MapProvider, Map, Marker} from 'react-map-gl';
+import React,{useEffect} from 'react'
+import { MapProvider, Map, Marker, Source, Layer } from 'react-map-gl';
 import Map3DLayer from './Map3DLayer';
 import MapMenu from './MapMenu';
+import Map3DModel from './Map3DModel';
 import { useSelector } from 'react-redux';
 
 
+const folderColors = {
+    '비행금지구역': '#FF0000', // 빨간색
+    '비행제한구역': '#FFA500', // 노란색
+    '공항': '#FFFF00',
+    '비행장': '#008000',
+    '초경량비행장치 전용공역(비행가능)': '#0000FF'
+};
+
 const Maps = () => {
-    const destination = useSelector((state)=>state.destination) 
+    const { lat, lng, geojsons } = useSelector((state) => state)
 
     return (
         <MapProvider>
@@ -23,7 +32,32 @@ const Maps = () => {
             >
                 <MapMenu />
                 <Map3DLayer />
-                <Marker longitude={destination.lng} latitude={destination.lat} color="blue" draggable={false}/>
+                
+                <Marker longitude={lng} latitude={lat} color="blue" draggable={false} />
+                {geojsons.map((data, index) => {
+                    // 폴더 이름에 해당하는 색상 가져오기
+                    const color = folderColors[data.folderName] || '#0080ff'; // 기본값으로 파란색 사용
+                    return (
+                        <Source id={`${index}`} type='geojson' data={data.geojson} key={`${index}`}>
+                            <Layer
+                                id={`${index}-fill`}
+                                type='fill'
+                                paint={{
+                                    'fill-color': color, // 폴더 이름에 해당하는 색상 설정
+                                    'fill-opacity': 0.5 // 폴리곤 투명도 설정
+                                }}
+                            />
+                            <Layer
+                                id={`${index}-fill`}
+                                type='line'
+                                paint={{
+                                    'line-color': color,
+                                    'line-width': 2
+                                }}
+                            />
+                        </Source>
+                    )
+                })}
             </Map>
         </MapProvider>
     )
