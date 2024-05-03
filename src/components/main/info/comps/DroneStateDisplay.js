@@ -1,16 +1,16 @@
 //파이어스토어에서 위도, 경도, 고도 값 받아오기
 import React, { useEffect, useState } from 'react';
-import { receiveData } from '../../../../receiveData_server'
+import { fetchDroneHeader } from '../../../../firebase_utils'
 import './DroneState.css';
 
 
-const DroneState = () => {
+const DroneStateDisplay = () => {
     const [droneState, setDroneState] = useState(null);
 
     useEffect(() => {
         const getDroneState = async () => {
             try {
-                const state = await receiveData('203.255.57.136', 5252); // Firestore에서 드론 상태 가져오기
+                const state = await fetchDroneHeader(); // Firestore에서 드론 상태 가져오기
                 setDroneState(state); // 상태 설정
             } catch (error) {
                 console.error('Error fetching drone state:', error);
@@ -22,15 +22,11 @@ const DroneState = () => {
 
     return (
         <div className='DroneStateContainer'>
-            <h2>Drone State</h2>
+            <h2>드론 상태창</h2>
             {droneState ? (
                 <div>
-                    <p>altitude: {droneState.altitude}</p>
-                    <p>latitude: {droneState.latitude}</p>
-                    <p>longitude: {droneState.longitude}</p>
-                    <p>roll: {droneState.roll}</p>
-                    <p>yaw: {droneState.yaw}</p>
-                    <p>pitch: {droneState.pitch}</p>
+                    <p>header: {droneState.header}</p>
+                    <p>파이어베이스에서 보내주는 값을 나중에 들고오기로 함</p>
                 </div>
             ) : (
                 <p>Loading drone state...</p>
@@ -39,4 +35,4 @@ const DroneState = () => {
     );
 };
 
-export default DroneState;
+export default DroneStateDisplay;

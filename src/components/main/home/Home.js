@@ -9,6 +9,7 @@ const Home = () => {
     return (
         <div className='Home'>    
             <Maps />
+            <ResizableButton/>
             <Zed3DMapping />
         </div>
     );

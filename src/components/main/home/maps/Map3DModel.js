@@ -3,6 +3,7 @@ import { useMap } from 'react-map-gl';
 import mapboxgl from 'mapbox-gl';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import * as THREE from 'three';
+import './Maps.css';
 
 const Drone3DView = () => {
     const { map } = useMap(); // 맵 객체 가져오기

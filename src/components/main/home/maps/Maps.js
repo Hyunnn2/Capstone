@@ -32,7 +32,7 @@ const Maps = () => {
             >
                 <MapMenu />
                 <Map3DLayer />
-                
+                <Map3DModel />
                 <Marker longitude={lng} latitude={lat} color="blue" draggable={false} />
                 {geojsons.map((data, index) => {
                     // 폴더 이름에 해당하는 색상 가져오기
