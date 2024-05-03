@@ -1,6 +1,46 @@
 .Drone3DViewContainer {
-  width: 400px;
-  height: 300px;
+  width: 35%;
+  height: 100%;
   position: relative;
 }
 
+.compass {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  font-weight: bold; 
+  color: whitesmoke;
+  text-align: center;
+}
+
+.directionNorth {
+  width: 5%;
+  height: 5%;
+  position: absolute;
+  top: 3%;
+  left: 50%;
+}
+
+.directionSouth {
+  width: 5%;
+  height: 5%;
+  position: absolute;
+  bottom: 3%;
+  left: 50%;
+}
+
+.directionWest {
+  width: 5%;
+  height: 5%;
+  position: absolute;
+  top: 50%;
+  left: 3%;
+}
+
+.directionEast {
+  width: 5%;
+  height: 5%;
+  position: absolute;
+  top: 50%;
+  right: 3%;
+}
