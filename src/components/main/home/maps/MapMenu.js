@@ -79,6 +79,9 @@ let theme = createTheme({
 })
 
 function TabPanel({ children, value, index, setValue}) {
+    if (value === null) {
+        return null; // value가 null이면 아무것도 렌더링하지 않음
+    }
 
     return (
         <div
@@ -88,7 +91,7 @@ function TabPanel({ children, value, index, setValue}) {
         >
             {value === index && (
                 
-                <Box sx={{ bgcolor: 'background.paper', height: '60%', width: 100 }}>
+                <Box sx={{ bgcolor: 'background.paper', height: '100%', width: 100 }}>
                     <Button onClick={() => setValue(null)}>
                         <CloseIcon />
                     </Button>
@@ -112,14 +115,15 @@ export default function VerticalTabs({}) {
     return (
         <ThemeProvider theme={theme}>
             <Box
-                sx={{ flexGrow: 1, bgcolor: 'transparent', display: 'flex', position: 'relative', width: 150, height: '100%', zIndex: 1 }}
+                sx={{ flexGrow: 1, bgcolor: 'transparent', display: 'flex', position: 'relative', width: 150, height: 250, zIndex: 1 }}
             >
                 <Tabs
                     orientation="vertical"
-                    value={value}
+                    value={value !== null ? value : false}
+                    //value={value}
                     onChange={handleChange}
                     aria-label="Vertical tabs example"
-                    sx={{ borderRight: 1, bgcolor: 'background.paper', borderColor: 'divider', width: 50 }}
+                    sx={{ borderRight: 1, bgcolor: 'background.paper', borderColor: 'divider', width: 50, height:'100%' }}
                 >
                     <Tab icon={<RoomIcon />} />
                     <Tab icon={<AutoModeIcon />} />

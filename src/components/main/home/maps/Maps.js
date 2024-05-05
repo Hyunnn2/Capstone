@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react'
+import React from 'react'
 import { MapProvider, Map, Marker, Source, Layer } from 'react-map-gl';
 import Map3DLayer from './Map3DLayer';
 import MapMenu from './MapMenu';
@@ -16,18 +16,21 @@ const folderColors = {
 
 const Maps = () => {
     const { lat, lng, geojsons } = useSelector((state) => state)
+    
 
-    return (
+        return (
         <MapProvider>
-            <Map
-                id='map'
+            <Map                
+                id='map'    
                 mapboxAccessToken="pk.eyJ1Ijoic3VleWVvbjIyIiwiYSI6ImNsdXBqZno0djBtZW8ybW1uOGo0dnY2Z3AifQ.Kwj0EDyPSHxKsMKaxGWTlw"
                 initialViewState={{
                     longitude: 128.1038,
                     latitude: 35.1535,
-                    zoom: 14
+                    zoom: 14,
+                    antialias: true,
+                    pitch:60
                 }}
-                style={{ width: 600, height: '100%' }}
+                //style={{ width: '100%', height: '100%' }}
                 mapStyle="mapbox://styles/mapbox/light-v10"
             >
                 <MapMenu />

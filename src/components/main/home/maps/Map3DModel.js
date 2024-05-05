@@ -60,7 +60,7 @@ const Drone3DView = () => {
                     (gltf) => {
                         const drone = gltf.scene;
                         this.scene.add(drone);
-                        console.log('map drone');
+                        console.log('map drone1');
                     }
                 );
                 this.map = map;
@@ -115,6 +115,7 @@ const Drone3DView = () => {
 
         map.on('style.load', () => {
             map.addLayer(customLayer, 'waterway-label');
+            console.log('map.on style.load');
         });
 
         // Cleanup

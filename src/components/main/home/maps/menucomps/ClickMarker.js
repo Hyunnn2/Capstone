@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { createTheme, ThemeProvider, TextField, InputAdornment, Button } from '@mui/material';
 import { uploadMarkerLocation } from '../../../../../firebase_utils';
 import { useMap } from 'react-map-gl';
@@ -51,20 +51,20 @@ const SelectDestinationEvent = () => {
     const { map } = useMap();
     const [clickDestination, setClickDestination] = useState(false)
     const dispatch = useDispatch()
-    const {lat, lng, alt} = useSelector((state)=>state);
+    const { lat, lng, alt } = useSelector((state) => state);
 
-    const handleMapClick = (e) => {
+    const handleMapClick = useCallback((e) => {
         const lat = e.lngLat.lat;
         const lng = e.lngLat.lng;
         dispatch(setDestinationLat(lat));
         dispatch(setDestinationLng(lng));
-    };
+    }, [dispatch]);
 
     const clickDestinationBtn = () => {
         console.log('목적지 선택 버튼 클릭')
         setClickDestination(!clickDestination)
         map.on('click', handleMapClick);
-        
+        map.setZoom(17);
     }
 
     const sendButtonEvent = () => {
@@ -72,7 +72,7 @@ const SelectDestinationEvent = () => {
             const latitude = lat;
             const longitude = lng;
             const altitude = alt;
-            console.log('전송', latitude, longitude, altitude); // This should log when the button is clicked
+            console.log('전송', latitude, longitude, altitude);
             uploadMarkerLocation(latitude, longitude, altitude);
             map.off('click', handleMapClick);
             console.log('click event off')
@@ -80,8 +80,6 @@ const SelectDestinationEvent = () => {
             console.log("목적지를 선택해주세요.");
         }
     };
-
-
 
     return (
         <ThemeProvider theme={theme}>
@@ -96,7 +94,7 @@ const SelectDestinationEvent = () => {
                             startAdornment: <InputAdornment position="start">Alt :</InputAdornment>,
                         }}
                         onChange={(event) => {
-                            dispatch(setDestinationAlt(parseFloat(event.target.value))); // 목적지 altitude 업데이트
+                            dispatch(setDestinationAlt(parseFloat(event.target.value)));
                         }}
                         value={alt}
                     />
