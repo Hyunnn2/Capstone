@@ -10,12 +10,12 @@ const DroneState = () => {
             <h2>Drone State</h2>
             {webSocketData ? (
                 <div>
-                    <p>altitude: {webSocketData.altitude}</p>
+                    {/* <p>altitude: {webSocketData.altitude}</p>
                     <p>latitude: {webSocketData.latitude}</p>
                     <p>longitude: {webSocketData.longitude}</p>
                     <p>roll: {webSocketData.roll}</p>
                     <p>yaw: {webSocketData.yaw}</p>
-                    <p>pitch: {webSocketData.pitch}</p>
+                    <p>pitch: {webSocketData.pitch}</p> */}
                 </div>
             ) : (
                 <p>Loading drone state...</p>

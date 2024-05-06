@@ -3,22 +3,14 @@
   height: 100%;
   position: relative;
 }
-
-.compass {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  font-weight: bold; 
-  color: whitesmoke;
-  text-align: center;
-}
-
 .directionNorth {
   width: 5%;
   height: 5%;
   position: absolute;
   top: 3%;
   left: 50%;
+  color: whitesmoke;
+  text-align: center;
 }
 
 .directionSouth {
@@ -27,6 +19,8 @@
   position: absolute;
   bottom: 3%;
   left: 50%;
+  color: whitesmoke;
+  text-align: center;
 }
 
 .directionWest {
@@ -35,6 +29,8 @@
   position: absolute;
   top: 50%;
   left: 3%;
+  color: whitesmoke;
+  text-align: center;
 }
 
 .directionEast {
@@ -43,4 +39,6 @@
   position: absolute;
   top: 50%;
   right: 3%;
+  color: whitesmoke;
+  text-align: center;
 }
