@@ -53,6 +53,7 @@ const Drone3DView = () => {
                     console.log('Model loaded successfully:', drone);
                     drone.scale.set(1, 1, 1);
                     droneRef.current = drone;
+                    
                 },
                 undefined,
                 (error) => {
@@ -96,9 +97,11 @@ const Drone3DView = () => {
                 droneRef.current.rotation.x += 0.01; //pitch
                 droneRef.current.rotation.y += 0.01; //yaw
                 droneRef.current.rotation.z += 0.01; //roll
+
             }
             rendererRef.current.render(sceneRef.current, cameraRef.current);
             requestAnimationFrame(animate);
+            
         };
         animate();
 
