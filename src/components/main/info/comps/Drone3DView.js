@@ -94,9 +94,9 @@ const Drone3DView = () => {
 
         const animate = () => {
             if (webSocketData && droneRef.current) {
-                droneRef.current.rotation.x = ((webSocketData.pitch/180)*Math.PI+Math.PI)*-1;
+                droneRef.current.rotation.x = ((webSocketData.pitch/180)*Math.PI);
                 droneRef.current.rotation.y = ((webSocketData.yaw/180)*Math.PI);
-                droneRef.current.rotation.z = ((webSocketData.roll/180)*Math.PI+Math.PI)*-1;
+                droneRef.current.rotation.z = ((webSocketData.roll/180)*Math.PI);
 
                 const yaw = webSocketData.yaw;
                 if (yaw >= 0 && yaw <= 90) {
