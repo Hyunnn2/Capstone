@@ -11,6 +11,7 @@
   left: 50%;
   color: whitesmoke;
   text-align: center;
+  font-weight: bold;
 }
 
 .directionSouth {
@@ -21,6 +22,7 @@
   left: 50%;
   color: whitesmoke;
   text-align: center;
+  font-weight: bold;
 }
 
 .directionWest {
@@ -31,6 +33,7 @@
   left: 3%;
   color: whitesmoke;
   text-align: center;
+  font-weight: bold;
 }
 
 .directionEast {
@@ -41,4 +44,5 @@
   right: 3%;
   color: whitesmoke;
   text-align: center;
+  font-weight: bold;
 }

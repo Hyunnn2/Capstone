@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef} from 'react';
 import './Drone3DView.css';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import * as THREE from 'three';
@@ -32,9 +32,7 @@ const Drone3DView = () => {
 
         // Three.js WebGLRenderer 배경 설정
         const canvas = renderer.domElement;
-        //canvas.style.background = 'radial-gradient(circle farthest-corner at center top, #071021, #19324a)';
-        //canvas.style.background = 'radial-gradient(circle farthest-corner at center top, #505C81, #56728C)';
-        canvas.style.background = 'radial-gradient(circle farthest-corner at center top, #294361, #505C81)';
+        canvas.style.background = 'radial-gradient(circle farthest-corner at center top, #505C81, #56728C)';
         
         // Directional Light 추가
         const directionalLight = new THREE.DirectionalLight(0xffffff, 4);
@@ -53,7 +51,7 @@ const Drone3DView = () => {
                     console.log('Model loaded successfully:', drone);
                     drone.scale.set(1, 1, 1);
                     droneRef.current = drone;
-                    
+                    droneRef.rotation.set(0, Math.PI, 0);
                 },
                 undefined,
                 (error) => {
@@ -88,32 +86,59 @@ const Drone3DView = () => {
     }, []);
     
     useEffect(() => {
+
+        const northElement = document.querySelector('.directionNorth');
+        const southElement = document.querySelector('.directionSouth');
+        const eastElement = document.querySelector('.directionEast');
+        const westElement = document.querySelector('.directionWest');
+
         const animate = () => {
             if (webSocketData && droneRef.current) {
-                droneRef.current.rotation.x = webSocketData.pitch;
-                droneRef.current.rotation.y = webSocketData.yaw;
-                droneRef.current.rotation.z = webSocketData.roll;
+                droneRef.current.rotation.x = ((webSocketData.pitch/180)*Math.PI+Math.PI)*-1;
+                droneRef.current.rotation.y = ((webSocketData.yaw/180)*Math.PI);
+                droneRef.current.rotation.z = ((webSocketData.roll/180)*Math.PI+Math.PI)*-1;
+
+                const yaw = webSocketData.yaw;
+                if (yaw >= 0 && yaw <= 90) {
+                    northElement.style.color = '#0019FF';
+                    southElement.style.color = 'whitesmoke';
+                    eastElement.style.color = 'whitesmoke';
+                    westElement.style.color = 'whitesmoke';
+                } else if (yaw > 90 && yaw <= 180) {
+                    northElement.style.color = 'whitesmoke';
+                    southElement.style.color = 'whitesmoke';
+                    eastElement.style.color = '#0019FF';
+                    westElement.style.color = 'whitesmoke';
+                } else if (yaw < 0 && yaw >= -90) {
+                    northElement.style.color = 'whitesmoke';
+                    southElement.style.color = 'whitesmoke';
+                    eastElement.style.color = 'whitesmoke';
+                    westElement.style.color = '#0019FF';
+                } else if (yaw < -90 && yaw >= -180) {
+                    northElement.style.color = 'whitesmoke';
+                    southElement.style.color = '#0019FF';
+                    eastElement.style.color = 'whitesmoke';
+                    westElement.style.color = 'whitesmoke';
+                }
+
             } else if (droneRef.current) { 
                 droneRef.current.rotation.x += 0.01; //pitch
-                droneRef.current.rotation.y += 0.01; //yaw
+                droneRef.current.rotation.y += 0.01 //yaw
                 droneRef.current.rotation.z += 0.01; //roll
-
             }
             rendererRef.current.render(sceneRef.current, cameraRef.current);
             requestAnimationFrame(animate);
-            
         };
         animate();
-
-
     }, [webSocketData]);
+
 
     return (
         <div className='Drone3DViewContainer' ref={containerRef}>
-            <div class="directionNorth">N</div>
-            <div class="directionSouth">S</div>
-            <div class="directionEast">E</div>
-            <div class="directionWest">W</div>
+            <div className='directionNorth'>N</div>
+            <div className='directionSouth'>S</div>
+            <div className='directionEast'>E</div>
+            <div className='directionWest'>W</div>
         </div>
     );
 };
