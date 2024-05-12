@@ -1,6 +1,6 @@
 import React ,{useState} from 'react';
 import {createTheme, MenuItem, ThemeProvider, Button, TextField } from '@mui/material';
-import { uploadAutoModeMisson } from '../../../../../firebase_utils'
+import { uploadMission } from '../../../../../firebase_utils'
 
 const missions = [
     {
@@ -81,7 +81,7 @@ const SelectModeEvent = () => {
     const clickAutoModeBtn =() =>{
         console.log('자율모드 선택 버튼 클릭')
         let misson = "misson"
-        uploadAutoModeMisson(misson)
+        uploadMission(misson)
     }
     const clickManualModeBtn =() =>{
         console.log('수동 선택 버튼 클릭')
@@ -90,7 +90,7 @@ const SelectModeEvent = () => {
 
     const selectManualModeMisson =(value) => {
         let misson = value
-        uploadAutoModeMisson(misson)
+        uploadMission(misson)
     }
     return(
         <ThemeProvider theme={theme}>

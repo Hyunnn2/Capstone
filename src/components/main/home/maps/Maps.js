@@ -129,7 +129,7 @@ const Maps = () => {
     }, []);
 
     return (
-        <MapProvider>
+        
             <Map                
                 id='map'    
                 mapboxAccessToken="pk.eyJ1Ijoic3VleWVvbjIyIiwiYSI6ImNsdXBqZno0djBtZW8ybW1uOGo0dnY2Z3AifQ.Kwj0EDyPSHxKsMKaxGWTlw"
@@ -148,7 +148,7 @@ const Maps = () => {
                     map.target.addLayer(_customLayer);
                 }}
             >
-                <MapMenu />
+                
                 <Map3DLayer />
                 <Marker longitude={lng} latitude={lat} color="blue" draggable={false} />
                 {geojsons.map((data, index) => {
@@ -177,7 +177,7 @@ const Maps = () => {
                 })}
                 
             </Map>
-        </MapProvider>
+        
     )
   
 

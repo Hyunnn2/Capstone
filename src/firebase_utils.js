@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, doc, setDoc, getDoc } from "firebase/firestore";
+import { getFirestore, doc, setDoc, getDoc,updateDoc } from "firebase/firestore";
 
 
 // Firebase 설정 및 초기화
@@ -35,18 +35,137 @@ export function uploadMarkerLocation(latitude, longitude, altitude) {
     });
 }
 
-export function uploadAutoModeMisson(misson) {
+export function uploadMission(mission) {
   const docRef = doc(db, "Capston", "drone");
-  setDoc(docRef, {
-      header: misson
-  })
-  .then(function() {
-    console.log("Misson uploaded successfully!");
-  })
-  .catch(function(error) {
-    console.error("Error uploading marker location: ", error);
-  });
+  getDoc(docRef)
+    .then((docSnap) => {
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        const newData = {
+          ...data,
+          header: mission
+        };
+        return updateDoc(docRef, newData);
+      } else {
+        return setDoc(docRef, {
+          header: mission
+        });
+      }
+    })
+    .then(function() {
+      console.log("Mission uploaded successfully!");
+    })
+    .catch(function(error) {
+      console.error("Error uploading mission: ", error);
+    });
 }
+export function uploadMeter(meter) {
+  const docRef = doc(db, "Capston", "drone");
+  getDoc(docRef)
+    .then((docSnap) => {
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        const newData = {
+          ...data,
+          meter: meter
+        };
+        return updateDoc(docRef, newData);
+      } else {
+        return setDoc(docRef, {
+          meter: meter
+        });
+      }
+    })
+    .then(function() {
+      console.log("Mission uploaded successfully!");
+    })
+    .catch(function(error) {
+      console.error("Error uploading mission: ", error);
+    });
+}
+export function uploadDegree(degree) {
+  const docRef = doc(db, "Capston", "drone");
+  getDoc(docRef)
+    .then((docSnap) => {
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        const newData = {
+          ...data,
+          degree: degree
+        };
+        return updateDoc(docRef, newData);
+      } else {
+        return setDoc(docRef, {
+          degree: degree
+        });
+      }
+    })
+    .then(function() {
+      console.log("Mission uploaded successfully!");
+    })
+    .catch(function(error) {
+      console.error("Error uploading mission: ", error);
+    });
+}
+export function uploadVelocity(velocity) {
+  const docRef = doc(db, "Capston", "drone");
+  getDoc(docRef)
+    .then((docSnap) => {
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        const newData = {
+          ...data,
+          velocity: velocity
+        };
+        return updateDoc(docRef, newData);
+      } else {
+        return setDoc(docRef, {
+          velocity: velocity
+        });
+      }
+    })
+    .then(function() {
+      console.log("Mission uploaded successfully!");
+    })
+    .catch(function(error) {
+      console.error("Error uploading mission: ", error);
+    });
+}
+export function uploadManualData(mission, degree, meter, velocity) {
+  const docRef = doc(db, "Capston", "drone");
+
+  return getDoc(docRef)
+    .then((docSnap) => {
+      let dataToUpdate = {};
+      if (docSnap.exists()) {
+        // 문서가 존재하면 기존 데이터를 가져와서 업데이트할 필드만 수정합니다.
+        const currentData = docSnap.data();
+        dataToUpdate = {
+          ...currentData,
+          header: mission,
+          degree: degree,
+          meter: meter,
+          velocity: velocity
+        };
+      } else {
+        // 문서가 없으면 새로운 데이터를 생성합니다.
+        dataToUpdate = {
+          header: mission,
+          degree: degree,
+          meter: meter,
+          velocity: velocity
+        };
+      }
+      return setDoc(docRef, dataToUpdate);
+    })
+    .then(function() {
+      console.log("Manual data uploaded successfully!");
+    })
+    .catch(function(error) {
+      console.error("Error uploading manual data: ", error);
+    });
+}
+
 
 export async function fetchDroneState() {
     try {

@@ -1,9 +1,8 @@
 import React, { useState, useCallback } from 'react';
 import { createTheme, ThemeProvider, TextField, InputAdornment, Button } from '@mui/material';
-import { uploadMarkerLocation } from '../../../../../firebase_utils';
+import { uploadMarkerLocation ,uploadMission} from '../../../../../firebase_utils';
 import { useMap } from 'react-map-gl';
 import { useDispatch, useSelector } from 'react-redux';
-
 import { setDestinationLat, setDestinationLng, setDestinationAlt } from '../../../../../redux/reducer/reducer';
 
 let theme = createTheme({
@@ -62,7 +61,7 @@ const SelectDestinationEvent = () => {
 
     const clickDestinationBtn = () => {
         console.log('목적지 선택 버튼 클릭')
-        setClickDestination(!clickDestination)
+        //setClickDestination(!clickDestination)
         map.on('click', handleMapClick);
         map.setZoom(17);
     }
@@ -74,12 +73,16 @@ const SelectDestinationEvent = () => {
             const altitude = alt;
             console.log('전송', latitude, longitude, altitude);
             uploadMarkerLocation(latitude, longitude, altitude);
+            uploadMission("upload")
             map.off('click', handleMapClick);
+            uploadMission("Waiting...")
+
             console.log('click event off')
         } else {
             console.log("목적지를 선택해주세요.");
         }
     };
+
 
     return (
         <ThemeProvider theme={theme}>

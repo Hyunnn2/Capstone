@@ -1,5 +1,5 @@
 import { useState } from 'react';
-
+import { MapProvider } from 'react-map-gl';
 import './Main.css'
 import Home from './home/Home';
 import Info from './info/Info';
@@ -7,9 +7,11 @@ import Info from './info/Info';
 
 export default function Main() {
     return (
-        <div className='Main'>
-            <Home/>
-            <Info/>
-        </div>
+        <MapProvider>
+            <div className='Main'>
+                <Home/>
+                <Info/>
+            </div>
+        </MapProvider>
     )
 }

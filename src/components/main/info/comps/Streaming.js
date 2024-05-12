@@ -3,6 +3,8 @@ import VideocamIcon from '@mui/icons-material/Videocam';
 import OpenInFullIcon from '@mui/icons-material/OpenInFull';
 import {createTheme, ThemeProvider, Box, IconButton } from '@mui/material';
 import {useDrag} from 'react-use-gesture';
+import VideoPlayer from './VideoPlayer';
+
 let theme = createTheme({
   components:{
     MuiButton: {
@@ -63,6 +65,8 @@ const Streaming = () => {
             zIndex: 1 
         }}
         >
+        
+          <VideoPlayer src="http://210.99.70.120:1935/live/cctv001.stream/playlist.m3u8" type="m3u8" />
           <IconButton sx={{ position: 'absolute', top: 0, right: 0 }} onClick={handleResizeClick}>
             <OpenInFullIcon sx={{ fontSize: 'small' }}/>
           </IconButton>
