@@ -6,8 +6,6 @@ import { useSelector } from 'react-redux';
 import mapboxgl from "mapbox-gl";
 import { useWebSocketData } from '../../../../WebSocketDataContext';
 
-
-
 const folderColors = {
     '비행금지구역': '#FF0000', // 빨간색
     '비행제한구역': '#FFA500', // 노란색
@@ -21,9 +19,11 @@ const Maps = () => {
     const { lat, lng, geojsons } = useSelector((state) => state);
     const [_customLayer,setCustomlayer]=useState(null);
     const droneRef = useRef(null);
+    const [modelTransform, setModelTransform] = useState(null);
 
     const { webSocketData } = useWebSocketData();
 
+    const THREE = window.THREE;
 
     useEffect(()=>{
         const modelOrigin = [128.1038, 35.1535];
@@ -44,8 +44,8 @@ const Maps = () => {
             rotateZ: modelRotate[2],
             scale: modelAsMercatorCoordinate.meterInMercatorCoordinateUnits()
         };
-    
-        const THREE = window.THREE;
+
+        setModelTransform(modelTransform);
     
         const customLayer = {
             id: '3d-model',
@@ -66,14 +66,26 @@ const Maps = () => {
     
                 const loader = new THREE.GLTFLoader();
                 loader.load(
-                    'drone/scene.gltf', 
+                    'animated_drone/scene.gltf', 
                     (gltf) => {
                         const drone = gltf.scene;
                         this.scene.add(drone);
                         console.log('Map Model loaded successfully:', drone);
-                        drone.scale.set(0.5, 0.5, 0.5);
+                        drone.scale.set(15, 15, 15);
                         
                         droneRef.current = drone;
+
+                        const mixer = new THREE.AnimationMixer(drone);
+                        const clip = gltf.animations[0]; // 첫 번째 애니메이션 클립인 'hover'를 가져옵니다.
+                        const action = mixer.clipAction(clip);
+                        action.play();
+
+                        // 매 프레임마다 애니메이션 업데이트
+                        this.renderer.setAnimationLoop(() => {
+                            mixer.update(0.01);
+                        });
+                        
+
                     }
                 );
                 this.map = map;
@@ -128,15 +140,84 @@ const Maps = () => {
 
     }, []);
 
+    useEffect(() => {
+        const modelRotate = [Math.PI / 2, 0, 0];
+
+        if (webSocketData) {
+            const longitude = webSocketData.longitude;
+            const latitude = webSocketData.latitude;
+            const altitude = webSocketData.altitude;
+    
+            const newModelOrigin = [latitude, longitude];
+            const modelAsMercatorCoordinate = mapboxgl.MercatorCoordinate.fromLngLat(
+                newModelOrigin, altitude
+            );
+    
+            const newModelTransform = {
+                translateX: modelAsMercatorCoordinate.x,
+                translateY: modelAsMercatorCoordinate.y,
+                translateZ: modelAsMercatorCoordinate.z,
+                rotateX: modelRotate[0],
+                rotateY: modelRotate[1],
+                rotateZ: modelRotate[2],
+                scale: modelAsMercatorCoordinate.meterInMercatorCoordinateUnits()
+            };
+    
+            setModelTransform(newModelTransform);
+            console.log(newModelTransform);
+
+            _customLayer.render = function (gl, matrix) {
+                const rotationX = new THREE.Matrix4().makeRotationAxis(
+                    new THREE.Vector3(1, 0, 0),
+                    modelTransform.rotateX
+                );
+                const rotationY = new THREE.Matrix4().makeRotationAxis(
+                    new THREE.Vector3(0, 1, 0),
+                    modelTransform.rotateY
+                );
+                const rotationZ = new THREE.Matrix4().makeRotationAxis(
+                    new THREE.Vector3(0, 0, 1),
+                    modelTransform.rotateZ
+                );
+    
+                const m = new THREE.Matrix4().fromArray(matrix);
+                const l = new THREE.Matrix4()
+                    .makeTranslation(
+                        modelTransform.translateX,
+                        modelTransform.translateY,
+                        modelTransform.translateZ
+                    )
+                    .scale(
+                        new THREE.Vector3(
+                            modelTransform.scale,
+                            -modelTransform.scale,
+                            modelTransform.scale
+                        )
+                    )
+                    .multiply(rotationX)
+                    .multiply(rotationY)
+                    .multiply(rotationZ);
+    
+                this.camera.projectionMatrix = m.multiply(l);
+                this.renderer.resetState();
+                this.renderer.render(this.scene, this.camera);
+                this.map.triggerRepaint();
+            }
+
+        }
+
+    }, [webSocketData]);
+    
+
     return (
-        
+        <MapProvider>
             <Map                
                 id='map'    
                 mapboxAccessToken="pk.eyJ1Ijoic3VleWVvbjIyIiwiYSI6ImNsdXBqZno0djBtZW8ybW1uOGo0dnY2Z3AifQ.Kwj0EDyPSHxKsMKaxGWTlw"
                 initialViewState={{
                     longitude: 128.1038,
                     latitude: 35.1535,
-                    zoom: 16,
+                    zoom: 18,
                     antialias: true,
                     pitch:60
                 }}
@@ -148,9 +229,17 @@ const Maps = () => {
                     map.target.addLayer(_customLayer);
                 }}
             >
-                
                 <Map3DLayer />
                 <Marker longitude={lng} latitude={lat} color="blue" draggable={false} />
+                {/* <Marker longitude={128.1038} latitude={35.1535} ><div>아</div> </Marker> */}
+                {/* {webSocketData && (
+                    <Marker
+                        latitude={webSocketData.longitude}
+                        longitude={webSocketData.latitude}
+                    >
+                        <div>여기</div>
+                    </Marker>
+                )} */}
                 {geojsons.map((data, index) => {
                     // 폴더 이름에 해당하는 색상 가져오기
                     const color = folderColors[data.folderName] || '#0080ff'; // 기본값으로 파란색 사용
@@ -177,11 +266,9 @@ const Maps = () => {
                 })}
                 
             </Map>
-        
+        </MapProvider>
     )
   
-
-        
 }
 
 export default Maps
