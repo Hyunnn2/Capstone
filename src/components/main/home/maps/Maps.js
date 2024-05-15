@@ -19,7 +19,6 @@ const Maps = () => {
     const { lat, lng, geojsons } = useSelector((state) => state);
     const [_customLayer,setCustomlayer]=useState(null);
     const droneRef = useRef(null);
-    const [modelTransform, setModelTransform] = useState(null);
 
     const { webSocketData } = useWebSocketData();
 
@@ -44,8 +43,6 @@ const Maps = () => {
             rotateZ: modelRotate[2],
             scale: modelAsMercatorCoordinate.meterInMercatorCoordinateUnits()
         };
-
-        setModelTransform(modelTransform);
     
         const customLayer = {
             id: '3d-model',
@@ -84,7 +81,6 @@ const Maps = () => {
                         this.renderer.setAnimationLoop(() => {
                             mixer.update(0.01);
                         });
-                        
 
                     }
                 );
@@ -162,36 +158,34 @@ const Maps = () => {
                 rotateZ: modelRotate[2],
                 scale: modelAsMercatorCoordinate.meterInMercatorCoordinateUnits()
             };
-    
-            setModelTransform(newModelTransform);
-            console.log(newModelTransform);
+
 
             _customLayer.render = function (gl, matrix) {
                 const rotationX = new THREE.Matrix4().makeRotationAxis(
                     new THREE.Vector3(1, 0, 0),
-                    modelTransform.rotateX
+                    newModelTransform.rotateX
                 );
                 const rotationY = new THREE.Matrix4().makeRotationAxis(
                     new THREE.Vector3(0, 1, 0),
-                    modelTransform.rotateY
+                    newModelTransform.rotateY
                 );
                 const rotationZ = new THREE.Matrix4().makeRotationAxis(
                     new THREE.Vector3(0, 0, 1),
-                    modelTransform.rotateZ
+                    newModelTransform.rotateZ
                 );
     
                 const m = new THREE.Matrix4().fromArray(matrix);
                 const l = new THREE.Matrix4()
                     .makeTranslation(
-                        modelTransform.translateX,
-                        modelTransform.translateY,
-                        modelTransform.translateZ
+                        newModelTransform.translateX,
+                        newModelTransform.translateY,
+                        newModelTransform.translateZ
                     )
                     .scale(
                         new THREE.Vector3(
-                            modelTransform.scale,
-                            -modelTransform.scale,
-                            modelTransform.scale
+                            newModelTransform.scale,
+                            -newModelTransform.scale,
+                            newModelTransform.scale
                         )
                     )
                     .multiply(rotationX)
@@ -203,11 +197,10 @@ const Maps = () => {
                 this.renderer.render(this.scene, this.camera);
                 this.map.triggerRepaint();
             }
-
         }
 
     }, [webSocketData]);
-    
+
 
     return (
         
@@ -217,7 +210,7 @@ const Maps = () => {
             initialViewState={{
                 longitude: 128.1038,
                 latitude: 35.1535,
-                zoom: 18,
+                zoom: 19,
                 antialias: true,
                 pitch:60
             }}
@@ -233,14 +226,14 @@ const Maps = () => {
             <FlightLog />
             <Marker longitude={lng} latitude={lat} color="blue" draggable={false} />
             {/* <Marker longitude={128.1038} latitude={35.1535} ><div>아</div> </Marker> */}
-            {/* {webSocketData && (
+            {webSocketData && (
                 <Marker
                     latitude={webSocketData.longitude}
                     longitude={webSocketData.latitude}
                 >
                     <div>여기</div>
                 </Marker>
-            )} */}
+            )}
             {geojsons.map((data, index) => {
                 // 폴더 이름에 해당하는 색상 가져오기
                 const color = folderColors[data.folderName] || '#0080ff'; // 기본값으로 파란색 사용

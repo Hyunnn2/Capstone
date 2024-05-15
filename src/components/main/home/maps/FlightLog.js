@@ -59,14 +59,15 @@ const FlightLog = () => {
 
     return (
         <Box 
-            height={0.3}
-            width={0.3}
+            height="30%"
+            width="30%"
             left={10}
             bottom={10}
             zIndex={3}
             bgcolor={'rgba(128,128,128,0.1)'}
             mx={1}
             my={1}
+            flexDirection="column"
             display="flex"
             position="absolute"
             gap={4}
@@ -76,7 +77,7 @@ const FlightLog = () => {
                 inputRef={textFieldRef} // ref 설정
                 id="standard-multiline-static"
                 multiline
-                rows={5}
+                rows={6}
                 width="100%"
                 value={droneState}
                 variant="standard"
@@ -87,6 +88,8 @@ const FlightLog = () => {
                             overflow: 'hidden',
                             scrollbarWidth: 'none', // 스크롤 바 숨기기
                             fontSize:"small",
+                            lineHeight: "1.2", // 추가된 줄 높이 설정
+                            padding: "0",
                         },
                         '&::before': {
                             borderBottom: 'none',

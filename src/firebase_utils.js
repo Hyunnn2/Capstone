@@ -45,6 +45,7 @@ export function uploadMission(mission) {
           ...data,
           header: mission
         };
+        
         return updateDoc(docRef, newData);
       } else {
         return setDoc(docRef, {
@@ -54,6 +55,7 @@ export function uploadMission(mission) {
     })
     .then(function() {
       console.log("Mission uploaded successfully!");
+      return updateDoc(docRef, { header: "Waiting..." });
     })
     .catch(function(error) {
       console.error("Error uploading mission: ", error);
