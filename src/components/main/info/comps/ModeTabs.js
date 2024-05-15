@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import AutoMode from './tabMenu/AutoMode.js';
 import ManualMode from './tabMenu/ManualMode.js';
-import { uploadManualData } from "../../../../firebase_utils.js";
+
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -45,7 +45,6 @@ export default function BasicTabs() {
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
-    uploadManualData("Waiting...", 45, 5, 1);
   };
 
   return (

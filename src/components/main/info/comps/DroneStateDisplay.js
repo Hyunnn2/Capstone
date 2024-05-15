@@ -26,7 +26,7 @@ const DroneStateDisplay = () => {
             {droneState ? (
                 <div>
                     <p>header: {droneState.header}</p>
-                    <p>파이어베이스에서 보내주는 값을 나중에 들고오기로 함</p>
+                    
                 </div>
             ) : (
                 <p>Loading drone state...</p>

@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react";
-import { MapProvider, useMap } from 'react-map-gl';
+import { useMap } from 'react-map-gl';
 import { useDispatch, useSelector } from 'react-redux';
 import { uploadMarkerLocation } from '../../../../../firebase_utils';
 import { setDestinationLat, setDestinationLng, setDestinationAlt } from '../../../../../redux/reducer/reducer';
@@ -49,6 +49,7 @@ const AutoMode = () => {
 
     const clickDestinationBtn = () => {
         console.log('목적지 선택 버튼 클릭')
+        uploadMission("mission_start")
         setClickDestination(!clickDestination)
         map.on('click', handleMapClick);
         map.setZoom(17);

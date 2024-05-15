@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, doc, setDoc, getDoc,updateDoc } from "firebase/firestore";
+import { getFirestore, doc, setDoc, getDoc,updateDoc, onSnapshot } from "firebase/firestore";
 
 
 // Firebase 설정 및 초기화
@@ -185,16 +185,20 @@ export async function fetchDroneState() {
     }
 }
 
-export async function fetchDroneHeader() {
+
+export async function fetchDroneHeader(callback) {
   try {
-      const docRef = doc(db, 'Capston', 'drone'); // 'Capstone' 컬렉션 내 'state' 문서 참조
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-          return docSnap.data(); // 문서 내용 반환
-      } else {
-          console.error('No such document!');
-          return null;
-      }
+      const docRef = doc(db, 'Capston', 'drone'); // 'Capstone' 컬렉션 내 'drone' 문서 참조
+      // 실시간으로 문서 변경 감지
+      onSnapshot(docRef, (docSnap) => {
+          if (docSnap.exists()) {
+              const data = docSnap.data();
+              callback(data); // 새로운 데이터를 콜백 함수에 전달
+          } else {
+              console.error('No such document!');
+              callback(null); // 문서가 없는 경우 null 전달
+          }
+      });
   } catch (error) {
       console.error('Error fetching drone state:', error);
       throw error;

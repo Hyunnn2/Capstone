@@ -1,6 +1,6 @@
 import React,{useState} from "react";
 import { createTheme, ThemeProvider, Grid, Button, Slider, Stack, Typography, Box } from "@mui/material";
-import { uploadMission,uploadMeter,uploadDegree,uploadVelocity } from "../../../../../firebase_utils";
+import { uploadMission,uploadMeter,uploadDegree,uploadVelocity,uploadManualData } from "../../../../../firebase_utils";
 const missions = [
     {
       value: 'arm',
@@ -45,11 +45,11 @@ const missions = [
     
     {
         value: 'manual_turn_left',
-        label: '왼쪽 90도 회전',
+        label: '왼쪽 회전',
     },
     {
         value: 'manual_turn_right',
-        label: '오른쪽 90도 회전',
+        label: '오른쪽 회전',
     },
     
 ];
@@ -103,6 +103,9 @@ const ManualMode = () => {
       <Grid container>
         <Grid item xs={4}>
           <Grid container spacing={1}>
+            <Grid item xs={12}>
+              <Button fullWidth onClick={() => uploadManualData("manual", 45, 5, 1)}>Manual Mode Start</Button>
+            </Grid>
           {missions.slice(0, 4).map((mission, index) => ( // missions 배열에서 0부터 3번 인덱스까지만 사용
           <Grid item xs={6} key={index}>
             <Button fullWidth onClick={() => clickManualModeBtn(mission.value)}>
