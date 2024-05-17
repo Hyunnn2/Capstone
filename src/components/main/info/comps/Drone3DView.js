@@ -24,6 +24,7 @@ const Drone3DView = () => {
         const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 1000); // 초기 비율을 1로 설정
         camera.position.set(0, 0.5, 0);
         camera.lookAt(0, 0, 0);
+        camera.rotation.z = Math.PI;
 
         // Three.js WebGLRenderer 생성
         const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
@@ -50,8 +51,8 @@ const Drone3DView = () => {
                     sceneRef.current.add(drone);
                     console.log('Model loaded successfully:', drone);
                     drone.scale.set(1, 1, 1);
+                    // drone.rotation.set(0,Math.PI,0);
                     droneRef.current = drone;
-                    droneRef.rotation.set(0, Math.PI, 0);
                 },
                 undefined,
                 (error) => {
@@ -94,8 +95,8 @@ const Drone3DView = () => {
 
         const animate = () => {
             if (webSocketData && droneRef.current) {
-                droneRef.current.rotation.x = ((webSocketData.pitch/180)*Math.PI);
-                droneRef.current.rotation.y = ((webSocketData.yaw/180)*Math.PI);
+                droneRef.current.rotation.x = -((webSocketData.pitch/180)*Math.PI);
+                droneRef.current.rotation.y = -((webSocketData.yaw/180)*Math.PI);
                 droneRef.current.rotation.z = ((webSocketData.roll/180)*Math.PI);
 
                 const yaw = webSocketData.yaw;
@@ -122,9 +123,9 @@ const Drone3DView = () => {
                 }
 
             } else if (droneRef.current) { 
-                droneRef.current.rotation.x += 0.01; //pitch
-                droneRef.current.rotation.y += 0.01 //yaw
-                droneRef.current.rotation.z += 0.01; //roll
+                // droneRef.current.rotation.x += 0.01; //pitch - 앞으로 돈다 -
+                // droneRef.current.rotation.y += 0.01; //yaw - 왼쪽으로 돈다 -
+                // droneRef.current.rotation.z += 0.01; //roll - 오른쪽으로 돈다 +
             }
             rendererRef.current.render(sceneRef.current, cameraRef.current);
             requestAnimationFrame(animate);

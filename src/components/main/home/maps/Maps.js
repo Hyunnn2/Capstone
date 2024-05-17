@@ -1,10 +1,15 @@
 import React, {useEffect, useRef, useState} from 'react'
-import { Map, Marker, Source, Layer } from 'react-map-gl';
+import { Map, Marker, Source, Layer, NavigationControl, FullscreenControl, ScaleControl } from 'react-map-gl';
 import Map3DLayer from './Map3DLayer';
 import FlightLog from './FlightLog';
 import { useSelector } from 'react-redux';
 import mapboxgl from "mapbox-gl";
 import { useWebSocketData } from '../../../../WebSocketDataContext';
+
+import Box from '@mui/material/Box';
+import Fab from '@mui/material/Fab';
+import NavigationIcon from '@mui/icons-material/Navigation';
+
 
 const folderColors = {
     '비행금지구역': '#FF0000', // 빨간색
@@ -27,7 +32,7 @@ const Maps = () => {
     useEffect(()=>{
         const modelOrigin = [128.1038, 35.1535];
         const modelAltitude = 0;
-        const modelRotate = [Math.PI / 2, 0, 0];
+        const modelRotate = [Math.PI / 2, Math.PI, 0];
 
         const modelAsMercatorCoordinate = mapboxgl.MercatorCoordinate.fromLngLat(
             modelOrigin,
@@ -137,12 +142,13 @@ const Maps = () => {
     }, []);
 
     useEffect(() => {
-        const modelRotate = [Math.PI / 2, 0, 0];
+        const modelRotate = [Math.PI / 2, Math.PI, 0];
 
         if (webSocketData) {
             const longitude = webSocketData.longitude;
             const latitude = webSocketData.latitude;
             const altitude = webSocketData.altitude;
+            const yaw = -(webSocketData.yaw * (Math.PI / 180) + Math.PI);
     
             const newModelOrigin = [latitude, longitude];
             const modelAsMercatorCoordinate = mapboxgl.MercatorCoordinate.fromLngLat(
@@ -154,7 +160,7 @@ const Maps = () => {
                 translateY: modelAsMercatorCoordinate.y,
                 translateZ: modelAsMercatorCoordinate.z,
                 rotateX: modelRotate[0],
-                rotateY: modelRotate[1],
+                rotateY: yaw,
                 rotateZ: modelRotate[2],
                 scale: modelAsMercatorCoordinate.meterInMercatorCoordinateUnits()
             };
@@ -201,6 +207,17 @@ const Maps = () => {
 
     }, [webSocketData]);
 
+    const handleFlyTo = () => {
+        if (webSocketData && mapRef.current) {
+            mapRef.current.flyTo({
+                center: [webSocketData.latitude, webSocketData.longitude],
+                zoom: 19,
+                pitch: 60,
+                bearing: 0,
+                essential: true
+            });
+        }
+    };
 
     return (
         
@@ -210,7 +227,7 @@ const Maps = () => {
             initialViewState={{
                 longitude: 128.1038,
                 latitude: 35.1535,
-                zoom: 19,
+                zoom: 20,
                 antialias: true,
                 pitch:60
             }}
@@ -221,17 +238,26 @@ const Maps = () => {
             onLoad={(map)=>{
                 map.target.addLayer(_customLayer);
             }}
+
         >
+            <Box sx={{ '& > :not(style)': { m: 1 } }}>
+                <Fab size="medium" color="primary" aria-label="Navi" onClick={handleFlyTo}>
+                    <NavigationIcon />
+                </Fab>
+            </Box>
+            <FullscreenControl position="top-right" />
+            <NavigationControl position="top-right" />
+            {/* <ScaleControl position='bottom-right'/> */}
+
             <Map3DLayer />
             <FlightLog />
             <Marker longitude={lng} latitude={lat} color="blue" draggable={false} />
-            {/* <Marker longitude={128.1038} latitude={35.1535} ><div>아</div> </Marker> */}
             {webSocketData && (
                 <Marker
                     latitude={webSocketData.longitude}
                     longitude={webSocketData.latitude}
                 >
-                    <div>여기</div>
+                    <div>Drone</div>
                 </Marker>
             )}
             {geojsons.map((data, index) => {

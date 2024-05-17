@@ -23,7 +23,7 @@ const Mode = () => {
   }, []);
 
   return (
-    <div>{mode}</div>
+    <div style={{ fontSize: '14px', marginLeft: '10px' }}>{mode}</div>
   );
 }
 

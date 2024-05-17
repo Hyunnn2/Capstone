@@ -9,12 +9,12 @@ export default function Battery() {
     const batteryPercentage = webSocketData && webSocketData.battery ? webSocketData.battery : 50;
 
     return (
-        <div className='Battery'>
+        <div style={{ fontSize: '14px' }}>
             {batteryPercentage <= 30 && <FontAwesomeIcon icon={faBatteryQuarter} size='1x'/>}
             {(batteryPercentage <= 60 && batteryPercentage > 30) && <FontAwesomeIcon icon={faBatteryHalf} size='1x'/>}
             {(batteryPercentage <= 90 && batteryPercentage > 60) && <FontAwesomeIcon icon={faBatteryThreeQuarters} size='1x'/>}
             {(batteryPercentage > 90) && <FontAwesomeIcon icon={faBatteryFull} size='1x'/>}
-            {`  ${batteryPercentage}%     `}
+            {`   ${batteryPercentage}%`}
         </div>
     );
 };
