@@ -10,7 +10,7 @@ const Mode = () => {
         setMode('AUTO');
       } else if (newState.header === "manual") {
         setMode('MANUAL');
-      } else if (newState.header === "mission_finish" || newState.header === "land" || newState.header === "emergency") {
+      } else if (newState.header === "finish" || newState.header === "land" || newState.header === "emergency") {
         setMode('MODE');
       }
     };

@@ -1,7 +1,8 @@
 .DroneStateContainer {
   width: 25%;
   height : 100%;
-  background-color: rgb(253, 235, 235);
-  border-top: 1px solid #ccc;
-  padding: 0;
+}
+
+.DroneStateContainer h2 {
+  margin-top: 0;
 }

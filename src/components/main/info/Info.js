@@ -9,10 +9,15 @@ export default function Info() {
 
     return (
         <div className='Info'>
+            <div className='SpaceBetweenComponents'></div>
             <ModeTabs />
+            <div className='SpaceBetweenComponents'></div>
             <DroneState/>
+            <div className='SpaceBetweenComponents'></div>
             <Drone3DView/>
+            <div className='SpaceBetweenComponents'></div>
             <Streaming/>
+            <div className='SpaceBetweenComponents'></div>
         </div>
     )
 }

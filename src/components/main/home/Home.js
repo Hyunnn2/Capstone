@@ -9,6 +9,7 @@ const Container = styled.div`
   display: flex;
   width: 100%;
   height: 100%;
+  background-color: lightgray;
 `;
 
 const LeftDiv = styled.div`
@@ -44,10 +45,11 @@ const Home = () => {
                 }}
                 handleStyles={{ //좌우조절 바
                     left: {
-                    width: '10px',
+                    width: '20px',
                     height: '100%',
                     left: '0px',
-                    backgroundColor: '#d1d5db',
+                    // backgroundColor: '#d1d5db',
+                    backgroundColor: 'black',
                     },
                 }}
             >

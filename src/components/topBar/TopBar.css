@@ -1,8 +1,7 @@
 /* TopBar */
 .TopBar{
     height: 32px;
-    background-color: #444;
-    border: 1px solid #666;
+    background-color: #000000;
     color: #ffffffcc;
     display: flex;
     align-items: center;

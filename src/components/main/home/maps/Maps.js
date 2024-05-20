@@ -8,7 +8,8 @@ import { useWebSocketData } from '../../../../WebSocketDataContext';
 
 import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
-import NavigationIcon from '@mui/icons-material/Navigation';
+import MyLocationIcon from '@mui/icons-material/MyLocation';
+import WowDroBtn from './WowDroBtn';
 
 
 const folderColors = {
@@ -240,12 +241,13 @@ const Maps = () => {
             }}
 
         >
+            <WowDroBtn />
             <Box sx={{ '& > :not(style)': { m: 1 } }}>
                 <Fab size="medium" color="primary" aria-label="Navi" onClick={handleFlyTo}>
-                    <NavigationIcon />
+                    <MyLocationIcon />
                 </Fab>
             </Box>
-            <FullscreenControl position="top-right" />
+            {/* <FullscreenControl position="top-right" /> */}
             <NavigationControl position="top-right" />
             {/* <ScaleControl position='bottom-right'/> */}
 

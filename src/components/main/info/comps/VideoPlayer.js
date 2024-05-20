@@ -1,22 +1,12 @@
 import React, { useEffect, useRef } from 'react';
 import Hls from 'hls.js';
 
-const VideoPlayer = ({ src, type }) => {
-  const videoRef = useRef();
-
-  useEffect(() => {
-    if (type === 'm3u8' && Hls.isSupported()) {
-      const hls = new Hls();
-      hls.loadSource(src);
-      hls.attachMedia(videoRef.current);
-    }
-  }, [src, type]);
-
-  return type === 'm3u8' ? (
-    <video ref={videoRef} controls />
-  ) : (
-    <video ref={videoRef} src={src} controls />
-  );
-};
+const VideoPlayer = () => {
+    return (
+        <div>
+            <img src="http://203.255.57.136:5255/video_feed" alt="Video Feed" />
+        </div>
+    );
+}
 
 export default VideoPlayer;

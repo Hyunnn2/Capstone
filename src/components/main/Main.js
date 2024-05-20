@@ -10,7 +10,9 @@ export default function Main() {
         <MapProvider>
             <div className='Main'>
                 <Home/>
+                <div className='SpaceBetweenComponents'></div>
                 <Info/>
+                <div className='SpaceBetweenComponents'></div>
             </div>
         </MapProvider>
     )

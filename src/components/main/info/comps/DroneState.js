@@ -9,13 +9,14 @@ const DroneState = () => {
         <div className='DroneStateContainer'>
             <h2>Drone State</h2>
             {webSocketData ? (
-                <div>
-                    <p>altitude: {webSocketData.altitude}</p>
-                    <p>latitude: {webSocketData.latitude}</p>
-                    <p>longitude: {webSocketData.longitude}</p>
-                    <p>roll: {webSocketData.roll}</p>
-                    <p>yaw: {webSocketData.yaw}</p>
-                    <p>pitch: {webSocketData.pitch}</p>
+                <div style={{ whiteSpace: 'pre-wrap' }}>
+                    <p>Altitude : {webSocketData.altitude}</p>
+                    <p>Longitude : {webSocketData.longitude}</p>
+                    <p>Latitude : {webSocketData.latitude}</p>
+                    <br />
+                    <p>Roll : {webSocketData.roll}</p>
+                    <p>Yaw  : {webSocketData.yaw}</p>
+                    <p>Pitch : {webSocketData.pitch}</p>
                 </div>
             ) : (
                 <p>Loading drone state...</p>

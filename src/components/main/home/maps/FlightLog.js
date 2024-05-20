@@ -9,6 +9,8 @@ const headerMapping = {
     "emergency":"긴급착륙합니다.",
     "pause":"잠시 멈춥니다.",
     "resume":"다시 미션을 시작합니다.",
+    "finish":"미션을 완료하였습니다.",
+    "return":"출발지로 이동합니다.",
     "arm": "시동 on",
     "disarm": "시동 off",
     "takeoff":"이륙합니다.",
@@ -21,17 +23,18 @@ const headerMapping = {
     "manual_right":"오른쪽으로 이동합니다.",
     "manual_turn_left":"왼쪽으로 회전합니다.",
     "manual_turn_right":"오른쪽으로 회전합니다.",
-    "aviod_start":"충돌회피를 시작합니다.",
-    "aviod_finish":"충돌회피가 끝?",
+    "avoid_start":"충돌회피를 시작합니다.",
+    "avoid_finish":"충돌회피가 끝났습니다.",
+    "left":"왼쪽으로 이동합니다.",
     "left_15":"왼쪽 75도로 이동합니다.",
     "left_30":"왼쪽 60도로 이동합니다.",
     "left_45":"왼쪽 45도로 이동합니다.",
     "left_60":"왼쪽 30도로 이동합니다.",
+    "right":"오른쪽으로 이동합니다.",
     "right_15":"오른쪽 75도로 이동합니다.",
     "right_30":"오른쪽 60도로 이동합니다.",
     "right_45":"오른쪽 45도로 이동합니다.",
     "right_60":"오른쪽 30도로 이동합니다.",
-
 }
 
 
@@ -44,7 +47,19 @@ const FlightLog = () => {
 
     useEffect(() => {
         const updateDroneState = (newState) => {
-            const mappedHeader = headerMapping[newState.header] || newState.header; // 매핑된 값이 없으면 원래 값 사용
+            let mappedHeader = headerMapping[newState.header] || newState.header; // 매핑된 값이 없으면 원래 값 사용
+            const mappedMeter = newState.meter;
+            const mappedDegree = newState.degree;
+            const mappedVelocity  = newState.velocity;
+
+            if (newState.header === "manual_up" || newState.header === "manual_down" 
+            || newState.header === "manual_forward" || newState.header === "manual_back" 
+            || newState.header === "manual_left" || newState.header === "manual_right") {
+                mappedHeader = `${mappedMeter}m ${headerMapping[newState.header]}`;
+            }
+            if (newState.header === "manual_turn_left" || newState.header === "manual_turn_right" ) {
+                mappedHeader = `${mappedDegree}도 ${headerMapping[newState.header]}`;
+            }
             if (newState.header !== "Waiting...") {
                 setDroneState(prevState => prevState + mappedHeader + '\n');
                 textFieldRef.current.scrollTop = textFieldRef.current.scrollHeight;
@@ -108,5 +123,3 @@ const FlightLog = () => {
 }
 
 export default FlightLog;
-
-
