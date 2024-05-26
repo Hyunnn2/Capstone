@@ -3,7 +3,7 @@ import VideocamIcon from '@mui/icons-material/Videocam';
 import OpenInFullIcon from '@mui/icons-material/OpenInFull';
 import {createTheme, ThemeProvider, Box, IconButton } from '@mui/material';
 import {useDrag} from 'react-use-gesture';
-import VideoPlayer from './VideoPlayer';
+import VideoPlayer from '../../home/zed/VideoPlayer';
 
 let theme = createTheme({
   components:{
@@ -76,7 +76,7 @@ const Streaming = () => {
             left:boxPosition.x,
             width: boxSize.width, 
             height: boxSize.height, 
-            zIndex: 1, 
+            zIndex: 101, 
         }}
         >
         

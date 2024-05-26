@@ -49,8 +49,8 @@ export default function BasicTabs() {
   };
 
   return (
-    <Box  className='ModeTabsContainer' >
-      <Box sx={{ position: 'relative', boxShadow: '0px 2px 0px rgba(255, 255, 255, 0.15)'}}> 
+    <Box >
+      <Box sx={{width:'100%', position: 'relative', boxShadow: '0px 2px 0px rgba(255, 255, 255, 0.15)'}}> 
         <Tabs
           value={value}
           onChange={handleChange}

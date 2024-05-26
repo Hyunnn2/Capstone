@@ -10,6 +10,10 @@ remote.initialize()
 // 이벤트 핸들러 모음 시작
 const activateEventHandler = require('./eventHandler.js');
 
+// DPI 스케일링 무시 설정
+app.commandLine.appendSwitch('high-dpi-support', '1');
+app.commandLine.appendSwitch('force-device-scale-factor', '1');
+
 function createMainWindow() {
     const mainWindow = new BrowserWindow({
         width: 800,
@@ -20,7 +24,8 @@ function createMainWindow() {
         webPreferences: {
             nodeIntegration: true,
             devTools: true,
-            preload: path.join(__dirname, 'preload.js')
+            preload: path.join(__dirname, 'preload.js'),
+            zoomFactor: 1.0
         }
     })
     activateEventHandler(mainWindow)
@@ -38,7 +43,8 @@ app.whenReady().then(() => {
 
 	app.on('activate', () => {
 		if (BrowserWindow.getAllWindows().length === 0) {
-			app.quit()
+            createMainWindow()
+		
 		}
 	})
 })

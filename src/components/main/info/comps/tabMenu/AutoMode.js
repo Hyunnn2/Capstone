@@ -2,8 +2,8 @@ import React, { useState, useCallback } from "react";
 import { useMap } from 'react-map-gl';
 import { useDispatch, useSelector } from 'react-redux';
 import { uploadMarkerLocation } from '../../../../../firebase_utils';
-import { setDestinationLat, setDestinationLng, setDestinationAlt } from '../../../../../redux/reducer/reducer';
-import { Paper, TextField, Grid, Button, createTheme, ThemeProvider} from "@mui/material";
+import { setDestinationLat, setDestinationLng, setDestinationAlt ,setMarkerTrue} from '../../../../../redux/reducer/reducer';
+import { Paper, TextField, Grid, Button, createTheme, ThemeProvider, Slider, Box} from "@mui/material";
 import { uploadMission } from "../../../../../firebase_utils";
 
 let theme = createTheme({
@@ -51,6 +51,8 @@ const AutoMode = () => {
     const [clickDestination, setClickDestination] = useState(false)
     const dispatch = useDispatch()
     const { lat, lng, alt } = useSelector((state) => state);
+ 
+
 
     const handleMapClick = useCallback((e) => {
         const lat = e.lngLat.lat;
@@ -59,12 +61,17 @@ const AutoMode = () => {
         dispatch(setDestinationLng(lng));
     }, [dispatch]);
 
+    const handleChange = (event, newValue) => {
+        dispatch(setDestinationAlt(newValue));
+      };
+
     const clickDestinationBtn = () => {
         console.log('목적지 선택 버튼 클릭')
         uploadMission("mission_start")
+        dispatch(setMarkerTrue())
         setClickDestination(!clickDestination)
         map.on('click', handleMapClick);
-        map.setZoom(17);
+        map.setZoom(19);
     }
 
     const sendButtonEvent = () => {
@@ -93,7 +100,7 @@ const AutoMode = () => {
                 <Grid item xs={7}>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
-                            <Paper fullWidth style={{textAlign:'center', backgroundColor:'black', color:'white'}}>Mission</Paper>
+                            <Paper fullWidth style={{textAlign:'center', backgroundColor:'rgb(44,44,44)', color:'white'}}>Mission</Paper>
                         </Grid>
                         <Grid item xs={6}>
                             <Button fullWidth onClick={clickDestinationBtn} style={{height:'40px'}}>
@@ -106,19 +113,34 @@ const AutoMode = () => {
                             </Button>
                         </Grid>
                         <Grid item xs={12}>
-                        <TextField
-                                id="standard-basic"
-                                fullWidth
-                                variant="standard"
-                                InputProps={{
-                                    startAdornment: <div position="start" style={{ color: 'white', width:'50px'}}>Alt :</div>,
-                                    style: { color: 'white' },
-                                }}
-                                onChange={(event) => {
-                                    dispatch(setDestinationAlt(parseFloat(event.target.value)));
-                                }}
-                                value={alt}
-                            />
+                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                <div style={{ color: 'white', width: '45px', fontSize:'small'}}>Alt :</div>
+                                <Box sx={{ width: 400, ml: 2 }}>
+                                    <Slider
+                                    aria-label="Altitude"
+                                    value={alt}
+                                    step={1}
+                                    marks={false}
+                                    min={5}
+                                    max={30}
+                                    defaultValue={10}
+                                    onChange={handleChange}
+                                    valueLabelDisplay="auto"
+                                    sx={{
+                                        color: 'secondary.main',
+                                        '& .MuiSlider-thumb': {
+                                        color: 'white',
+                                        },
+                                        '& .MuiSlider-track': {
+                                        color: 'white',
+                                        },
+                                        '& .MuiSlider-rail': {
+                                        color: 'grey',
+                                        },
+                                    }}
+                                    />
+                                </Box>
+                                </Box>
                         </Grid>
                         <Grid item xs={12}>
                         <TextField

@@ -1,6 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Box, TextField } from '@mui/material';
 import { fetchDroneHeader } from '../../../../firebase_utils';
+import { useSelector, useDispatch } from 'react-redux';
+import { updateDroneState } from '../../../../redux/reducer/reducer';
+
 const headerMapping = {
     "manual":"메뉴얼 모드를 시작합니다.",
     "mission_start":"자율 주행 모드를 시작합니다.목적지를 지도에서 클릭해주세요.",
@@ -40,13 +43,14 @@ const headerMapping = {
 
     
 const FlightLog = () => {
-    const [droneState, setDroneState] = useState('');
+    const dispatch = useDispatch()
+    const { droneState } = useSelector((state) => state)
 
     // TextField 요소에 대한 ref 생성
     const textFieldRef = useRef();
 
     useEffect(() => {
-        const updateDroneState = (newState) => {
+        const _updateDroneState = (newState) => {
             let mappedHeader = headerMapping[newState.header] || newState.header; // 매핑된 값이 없으면 원래 값 사용
             const mappedMeter = newState.meter;
             const mappedDegree = newState.degree;
@@ -61,16 +65,18 @@ const FlightLog = () => {
                 mappedHeader = `${mappedDegree}도 ${headerMapping[newState.header]}`;
             }
             if (newState.header !== "Waiting...") {
-                setDroneState(prevState => prevState + mappedHeader + '\n');
-                textFieldRef.current.scrollTop = textFieldRef.current.scrollHeight;
+                dispatch(updateDroneState(mappedHeader));
+                textFieldRef.current.scrollTop = textFieldRef.current.scrollHeight !== null ? textFieldRef.current.scrollHeight : 1;
             }
         };
-        fetchDroneHeader(updateDroneState);
+        fetchDroneHeader(_updateDroneState);
 
         return () => {
             // cleanup 함수에서 해제
         };
     }, []);
+   
+
 
     return (
         <Box 
@@ -92,7 +98,7 @@ const FlightLog = () => {
                 inputRef={textFieldRef} // ref 설정
                 id="standard-multiline-static"
                 multiline
-                rows={6}
+                rows={9}
                 width="100%"
                 value={droneState}
                 variant="standard"

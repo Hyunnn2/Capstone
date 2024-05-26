@@ -5,11 +5,11 @@ import FlightLog from './FlightLog';
 import { useSelector } from 'react-redux';
 import mapboxgl from "mapbox-gl";
 import { useWebSocketData } from '../../../../WebSocketDataContext';
-
 import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
 import MyLocationIcon from '@mui/icons-material/MyLocation';
 import WowDroBtn from './WowDroBtn';
+import ClearBtn from './ClearBtn';
 
 
 const folderColors = {
@@ -22,7 +22,7 @@ const folderColors = {
 
 const Maps = () => {
     const mapRef=useRef();
-    const { lat, lng, geojsons } = useSelector((state) => state);
+    const { isMarker, lat, lng, geojsons } = useSelector((state) => state);
     const [_customLayer,setCustomlayer]=useState(null);
     const droneRef = useRef(null);
 
@@ -250,10 +250,11 @@ const Maps = () => {
             {/* <FullscreenControl position="top-right" /> */}
             <NavigationControl position="top-right" />
             {/* <ScaleControl position='bottom-right'/> */}
+            <ClearBtn />
 
             <Map3DLayer />
             <FlightLog />
-            <Marker longitude={lng} latitude={lat} color="blue" draggable={false} />
+            {isMarker && (<Marker longitude={lng} latitude={lat} color="blue" draggable={false} />)}
             {webSocketData && (
                 <Marker
                     latitude={webSocketData.longitude}

@@ -4,11 +4,12 @@ import Maps from './maps/Maps.js';
 import Zed3DMapping from './zed/Zed3DMapping.js';
 import { Resizable } from 're-resizable';
 import styled from '@emotion/styled';
+import ZedCamera from './zed/ZedCamera.js';
 
 const Container = styled.div`
   display: flex;
   width: 100%;
-  height: 100%;
+  height: 80%;
   background-color: lightgray;
 `;
 
@@ -32,7 +33,7 @@ const Home = () => {
             <Resizable
                 defaultSize={{ width: '20%', height: '100%' }}
                 minWidth={'20%'}
-                maxWidth={'80%'}
+                maxWidth={'70%'}
                 enable={{
                     top: false,
                     right: false,
@@ -49,13 +50,13 @@ const Home = () => {
                     height: '100%',
                     left: '0px',
                     // backgroundColor: '#d1d5db',
-                    backgroundColor: 'black',
+                    backgroundColor: 'rgb(44, 44, 44)',
+                    overflow: 'hidden',
+                    zIndex:'100'
                     },
                 }}
             >
-                <RightDiv>
-                    <Zed3DMapping />
-                </RightDiv>
+            <ZedCamera />
             </Resizable>
         </Container>
     );

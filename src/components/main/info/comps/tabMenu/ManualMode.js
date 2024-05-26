@@ -1,4 +1,6 @@
 import React,{useState} from "react";
+import { useSelector } from 'react-redux';
+import { useMap } from 'react-map-gl';
 import { createTheme, ThemeProvider, Grid, Button, Slider, Stack, Typography, Box } from "@mui/material";
 import { uploadMission,uploadMeter,uploadDegree,uploadVelocity,uploadManualData } from "../../../../../firebase_utils";
 const missions = [
@@ -72,7 +74,7 @@ let theme = createTheme({
                   minWidth: '10px',
                   minHeight: '5px',
 
-                  '&:hover': {
+                    '&:hover': {
                       backgroundColor: '#B0B0B0', // 호버 시 색상
                     },
                     '&:active': {
@@ -89,6 +91,7 @@ const ManualMode = () => {
   const [degreeValue, setDegreeValue] = useState(45);
   const [velocityValue, setVelocityValue] = useState(1);
 
+
   const handleChangeMeter = (event, newValue) => {
     setMeterValue(newValue);
     uploadMeter(newValue);
@@ -101,20 +104,23 @@ const ManualMode = () => {
     setVelocityValue(newValue);
     uploadVelocity(newValue);
   };
+  const clickManualStartBtn = () => {
+    uploadManualData("manual", 45, 5, 1);
+    //만약 map에 마커가 있다면 remove
+    
+  };
   
-  
-
   const clickManualModeBtn = (type) => {
     uploadMission(type); 
   };
   return (
     <ThemeProvider theme={theme}>
-      <Grid container sx={{ padding: 0 }} spacing={3}>
+      <Grid container sx={{ padding: 0}} spacing={3}>
 
         <Grid item xs={3.5}>
           <Grid container spacing={1.7}>
             <Grid item xs={12}>
-              <Button fullWidth onClick={() => uploadManualData("manual", 45, 5, 1)} 
+              <Button fullWidth onClick={clickManualStartBtn} 
                       style={{backgroundColor:'#A0C1FF'}}>Manual Mode Start</Button>
             </Grid>
           {missions.slice(0, 4).map((mission, index) => ( // missions 배열에서 0부터 3번 인덱스까지만 사용
@@ -123,7 +129,7 @@ const ManualMode = () => {
               {mission.label}
             </Button>
           </Grid>
-          ))}
+          ))} 
           </Grid>
         </Grid>
 
@@ -250,6 +256,7 @@ const ManualMode = () => {
                 valueLabelDisplay="auto"
                 min={0.5}
                 max={1.5}
+                step={0.1}
                 defaultValue={1}
                 Value={velocityValue}
                 onChange={handleChangeVelocity}
