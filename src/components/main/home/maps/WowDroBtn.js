@@ -6,6 +6,7 @@ import MapIcon from '@mui/icons-material/Map';
 import AirplanemodeInactiveIcon from '@mui/icons-material/AirplanemodeInactive';
 import LocalAirportIcon from '@mui/icons-material/LocalAirport';
 import { addGeojson, removeGeojson } from '../../../../redux/reducer/reducer'; // 적절한 경로로 수정
+import FlightTakeoffIcon from '@mui/icons-material/FlightTakeoff';
 let theme = createTheme({
     components: {
         MuiFab: {
@@ -106,7 +107,7 @@ return (
         <SpeedDial
         ariaLabel="SpeedDial"
         direction='right'
-        icon={<MapIcon />}
+        icon={<FlightTakeoffIcon />}
         >
         {actions.map((action) => (
             <SpeedDialAction

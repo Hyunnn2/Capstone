@@ -16,8 +16,7 @@ export default function Info() {
             <div className='SpaceBetweenComponents'></div>
             <Drone3DView/>
             <div className='SpaceBetweenComponents'></div>
-            <Streaming/>
-            <div className='SpaceBetweenComponents'></div>
+
         </div>
     )
 }

@@ -218,6 +218,15 @@ const Maps = () => {
                 essential: true
             });
         }
+        else {
+            mapRef.current.flyTo({
+                center: [128.1038, 35.1535],
+                zoom: 19,
+                pitch: 60,
+                bearing: 0,
+                essential: true
+            });
+        }
     };
 
     return (

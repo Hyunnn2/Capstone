@@ -33,7 +33,7 @@ const Home = () => {
             <Resizable
                 defaultSize={{ width: '20%', height: '100%' }}
                 minWidth={'20%'}
-                maxWidth={'70%'}
+                maxWidth={'57%'}
                 enable={{
                     top: false,
                     right: false,

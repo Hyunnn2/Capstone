@@ -115,9 +115,9 @@ const ManualMode = () => {
   };
   return (
     <ThemeProvider theme={theme}>
-      <Grid container sx={{ padding: 0}} spacing={3}>
+      <Grid container sx={{ padding: 0}} spacing={4}>
 
-        <Grid item xs={3.5}>
+        <Grid item xs={3.7}>
           <Grid container spacing={1.7}>
             <Grid item xs={12}>
               <Button fullWidth onClick={clickManualStartBtn} 
@@ -133,7 +133,9 @@ const ManualMode = () => {
           </Grid>
         </Grid>
 
-        <Grid item xs={1.4}>
+        <Grid item xs={0.8}></Grid>
+
+        <Grid item xs={1.5}>
           <Grid container spacing={1} >
             {missions.slice(4, 5).map((mission, index) => ( // missions 배열에서 4번 인덱스까지만 사용
             <Grid item xs={12} key={index}>
@@ -157,7 +159,7 @@ const ManualMode = () => {
           </Grid>
         </Grid>
 
-        <Grid item xs={3.8}>
+        <Grid item xs={3}>
           <Grid container spacing={1} >
           {missions.slice(6, 7).map((mission, index) => ( 
           <Grid item xs={4} key={index} container justifyContent="center" alignItems="center">
@@ -215,8 +217,8 @@ const ManualMode = () => {
         </Grid>
 
 
-        <Grid item xs={2.5}>
-          <Stack sx={{ height: "90%" }} spacing={2} direction="row">
+        <Grid item xs={2.8}>
+          <Stack sx={{ height: "90%" }} spacing={4} direction="row">
             <Box>
               <Typography variant="body2" gutterBottom>
                 거리

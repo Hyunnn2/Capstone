@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { useMap } from 'react-map-gl';
 import { useDispatch, useSelector } from 'react-redux';
-import { uploadMarkerLocation } from '../../../../../firebase_utils';
+import { uploadCondition, uploadMarkerLocation } from '../../../../../firebase_utils';
 import { setDestinationLat, setDestinationLng, setDestinationAlt ,setMarkerTrue} from '../../../../../redux/reducer/reducer';
 import { Paper, TextField, Grid, Button, createTheme, ThemeProvider, Slider, Box} from "@mui/material";
 import { uploadMission } from "../../../../../firebase_utils";
@@ -93,6 +93,9 @@ const AutoMode = () => {
     const clickAutoModeBtn = (type) => {
         uploadMission(type); 
     };
+    const clickAvoidBtn = (condition) => {
+        uploadCondition(condition);
+    }
 
     return (
         <ThemeProvider theme={theme}>
@@ -170,9 +173,13 @@ const AutoMode = () => {
                 </Grid>
                 <Grid item xs={5}>
                     <Grid container spacing={2} >
-                        <Grid item xs={12} >
+                        <Grid item xs={9} >
                             <Button fullWidth onClick={() => clickAutoModeBtn("mission")} >
                                 자율주행 시작</Button>
+                        </Grid>
+                        <Grid item xs={3} >
+                            <Button fullWidth onClick={() => clickAvoidBtn("avoid")} >
+                                충돌회피</Button>
                         </Grid>
                         <Grid item xs={6}>
                             <Button fullWidth onClick={() => clickAutoModeBtn("pause")} >
@@ -183,15 +190,30 @@ const AutoMode = () => {
                                 다시시작</Button>
                         </Grid>
                         <Grid item xs={12}>
-                            <Button fullWidth onClick={() => clickAutoModeBtn("emergency")} 
+                            <Button 
+                            fullWidth 
+                            onClick={() => {
+                                clickAutoModeBtn("emergency");
+                                clickAvoidBtn("X");
+                            }} 
                                     style={{backgroundColor:'#F43A3A', color:'white'}} >
                                 긴급착륙</Button>
                         </Grid>
                         <Grid item xs={6}>
-                            <Button fullWidth onClick={() => clickAutoModeBtn("return")}>return</Button>
+                            <Button 
+                            fullWidth 
+                            onClick={() => {
+                                clickAutoModeBtn("return");
+                                clickAvoidBtn("X");
+                                }}>return</Button>
                         </Grid>
                         <Grid item xs={6}>
-                            <Button fullWidth onClick={() => clickAutoModeBtn("land")}>착륙</Button>
+                            <Button 
+                            fullWidth 
+                            onClick={() => {
+                                clickAutoModeBtn("land");
+                                clickAvoidBtn("X");
+                                }}>착륙</Button>
                         </Grid>
                     </Grid>
                 </Grid>
@@ -202,5 +224,3 @@ const AutoMode = () => {
     
 }
 export default AutoMode;
-
-

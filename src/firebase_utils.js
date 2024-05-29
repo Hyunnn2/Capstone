@@ -22,16 +22,54 @@ const db = getFirestore(app);
   // 클릭한 위치를 Firebase에 업로드하는 함수
 export function uploadMarkerLocation(latitude, longitude, altitude) {
     const docRef = doc(db, "Capston", "map");
-    setDoc(docRef, {
-        lat: latitude,
-        lon: longitude,
-        alt: altitude
+    getDoc(docRef)
+    .then((docSnap) => {
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        const newData = {
+          ...data,
+          lat: latitude,
+          lon: longitude,
+          alt: altitude
+        };
+        return updateDoc(docRef, newData);
+      } else {
+        return setDoc(docRef, {
+          lat: latitude,
+          lon: longitude,
+          alt: altitude
+        });
+      }
     })
     .then(function() {
-      console.log("Marker location uploaded successfully!");
+      console.log("Mission uploaded successfully!");
     })
     .catch(function(error) {
-      console.error("Error uploading marker location: ", error);
+      console.error("Error uploading mission: ", error);
+    });
+}
+export function uploadCondition(condition) {
+  const docRef = doc(db, "Capston", "map");
+  getDoc(docRef)
+    .then((docSnap) => {
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        const newData = {
+          ...data,
+          condition: condition
+        };
+        return updateDoc(docRef, newData);
+      } else {
+        return setDoc(docRef, {
+          condition: condition
+        });
+      }
+    })
+    .then(function() {
+      console.log("Mission uploaded successfully!");
+    })
+    .catch(function(error) {
+      console.error("Error uploading mission: ", error);
     });
 }
 
@@ -55,7 +93,15 @@ export function uploadMission(mission) {
     })
     .then(function() {
       console.log("Mission uploaded successfully!");
-      return updateDoc(docRef, { header: "Waiting..." });
+      setTimeout(() => {
+        updateDoc(docRef, { header: "Waiting..." })
+          .then(() => {
+            console.log("Header updated to 'Waiting...' successfully!");
+          })
+          .catch((error) => {
+            console.error("Error updating header to 'Waiting...': ", error);
+          });
+      }, 1000);
     })
     .catch(function(error) {
       console.error("Error uploading mission: ", error);
@@ -206,4 +252,3 @@ export async function fetchDroneHeader(callback) {
       throw error;
   }
 }
-

@@ -23,10 +23,10 @@ export default function TopBar() {
 
     return (
     <div className='TopBar'>
-        <img src={ Icon } alt='App Icon' className='AppIcon' />
+        
         <Battery />
         <Mode />
-        <label className='TopBarTitle'> MyGCS</label>
+        <label className='TopBarTitle'> <img src={ Icon } alt='App Icon' className='AppIcon' /> NOVA</label>
         <button className='TopBarBtn' id='MinimizeBtn' onClick={minimizeMainWindow}>
             <FontAwesomeIcon icon={faWindowMinimize} size='1x'/>
         </button>

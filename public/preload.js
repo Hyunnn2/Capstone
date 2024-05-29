@@ -8,5 +8,6 @@ contextBridge.exposeInMainWorld('electronAPI', {
     openDirectory: () => ipcRenderer.invoke('openDirectory'),
     searchClick: () => ipcRenderer.send('searchClick'),
     settingClick: () => ipcRenderer.send('settingClick'),
-    getwowDroHandler:() => ipcRenderer.invoke('getwowDroHandler')
+    getwowDroHandler:() => ipcRenderer.invoke('getwowDroHandler'),
+    downloadObj: (url) => ipcRenderer.invoke('download-obj', url)
 })

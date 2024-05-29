@@ -8,14 +8,15 @@ const headerMapping = {
     "manual":"메뉴얼 모드를 시작합니다.",
     "mission_start":"자율 주행 모드를 시작합니다.목적지를 지도에서 클릭해주세요.",
     "upload":"목적지 선택을 완료하였습니다.",
-    "mission":"미션을 시작합니다",
+    "mission":"자율주행 모드를 시작합니다",
+    "avoid":"충돌회피 기능을 추가합니다.",
     "emergency":"긴급착륙합니다.",
     "pause":"잠시 멈춥니다.",
     "resume":"다시 미션을 시작합니다.",
     "finish":"미션을 완료하였습니다.",
     "return":"출발지로 이동합니다.",
-    "arm": "시동 on",
-    "disarm": "시동 off",
+    "arm": "시동 거는 중",
+    "disarm": "시동 끄는 중",
     "takeoff":"이륙합니다.",
     "land":"착륙합니다.",
     "manual_up":"상승합니다.",
@@ -38,6 +39,7 @@ const headerMapping = {
     "right_30":"오른쪽 60도로 이동합니다.",
     "right_45":"오른쪽 45도로 이동합니다.",
     "right_60":"오른쪽 30도로 이동합니다.",
+    "back":"뒤로 이동합니다"
 }
 
 
