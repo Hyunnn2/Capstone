@@ -11,8 +11,8 @@ const DroneState = () => {
             {webSocketData ? (
                 <div style={{ whiteSpace: 'pre-wrap' }}>
                     <p>Altitude : {webSocketData.altitude}</p>
-                    <p>Longitude : {webSocketData.longitude}</p>
-                    <p>Latitude : {webSocketData.latitude}</p>
+                    <p>Longitude : {webSocketData.latitude}</p>
+                    <p>Latitude : {webSocketData.longitude}</p>
                     <br />
                     <p>Roll : {webSocketData.roll}</p>
                     <p>Yaw  : {webSocketData.yaw}</p>

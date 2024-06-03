@@ -30,7 +30,6 @@ const ZedCamera = () => {
                 style={{ position: 'absolute', top: '10px', left: '30px', zIndex: '1000' }}
             >
                 <ToggleButton value="Streaming" style={{backgroundColor:'rgb(255, 255, 255, 0.3)'}}>Streaming</ToggleButton>
-                <ToggleButton value="Zed3DMapping" style={{backgroundColor:'rgb(255, 255, 255, 0.3)'}}>3D mapping</ToggleButton>
                 <ToggleButton value="ZedOBJ" style={{backgroundColor:'rgb(255, 255, 255, 0.3)'}}>3D Viewer</ToggleButton>
             </ToggleButtonGroup>
             {ZedComponent}

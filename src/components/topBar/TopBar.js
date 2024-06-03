@@ -1,6 +1,6 @@
 import './TopBar.css'
 import Battery from './battery/Battery.js';
-import Icon from '../../assets/Logo.png'
+import Icon from '../../assets/icon3.png'
 import Mode from './mode/Mode.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWindowMinimize, faWindowMaximize, faWindowClose } from '@fortawesome/free-solid-svg-icons';

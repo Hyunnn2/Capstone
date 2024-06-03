@@ -42,10 +42,10 @@ export function uploadMarkerLocation(latitude, longitude, altitude) {
       }
     })
     .then(function() {
-      console.log("Mission uploaded successfully!");
+      console.log("location uploaded successfully!");
     })
     .catch(function(error) {
-      console.error("Error uploading mission: ", error);
+      console.error("Error uploading location: ", error);
     });
 }
 export function uploadCondition(condition) {
@@ -73,6 +73,7 @@ export function uploadCondition(condition) {
     });
 }
 
+
 export function uploadMission(mission) {
   const docRef = doc(db, "Capston", "drone");
   getDoc(docRef)
@@ -83,7 +84,6 @@ export function uploadMission(mission) {
           ...data,
           header: mission
         };
-        
         return updateDoc(docRef, newData);
       } else {
         return setDoc(docRef, {
@@ -93,15 +93,6 @@ export function uploadMission(mission) {
     })
     .then(function() {
       console.log("Mission uploaded successfully!");
-      setTimeout(() => {
-        updateDoc(docRef, { header: "Waiting..." })
-          .then(() => {
-            console.log("Header updated to 'Waiting...' successfully!");
-          })
-          .catch((error) => {
-            console.error("Error updating header to 'Waiting...': ", error);
-          });
-      }, 1000);
     })
     .catch(function(error) {
       console.error("Error uploading mission: ", error);
@@ -125,10 +116,10 @@ export function uploadMeter(meter) {
       }
     })
     .then(function() {
-      console.log("Mission uploaded successfully!");
+      console.log("Meter uploaded successfully!");
     })
     .catch(function(error) {
-      console.error("Error uploading mission: ", error);
+      console.error("Error uploading meter: ", error);
     });
 }
 export function uploadDegree(degree) {
@@ -149,10 +140,10 @@ export function uploadDegree(degree) {
       }
     })
     .then(function() {
-      console.log("Mission uploaded successfully!");
+      console.log("Degree uploaded successfully!");
     })
     .catch(function(error) {
-      console.error("Error uploading mission: ", error);
+      console.error("Error uploading degree: ", error);
     });
 }
 export function uploadVelocity(velocity) {
@@ -173,10 +164,10 @@ export function uploadVelocity(velocity) {
       }
     })
     .then(function() {
-      console.log("Mission uploaded successfully!");
+      console.log("Velocity uploaded successfully!");
     })
     .catch(function(error) {
-      console.error("Error uploading mission: ", error);
+      console.error("Error uploading velocity: ", error);
     });
 }
 export function uploadManualData(mission, degree, meter, velocity) {
