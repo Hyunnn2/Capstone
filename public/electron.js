@@ -4,29 +4,30 @@ const fs = require('fs');
 
 const activateEventHandler = require('./eventHandler.js');
 
-// DPI 스케일링 무시 설정
-app.commandLine.appendSwitch('high-dpi-support', '1');
-app.commandLine.appendSwitch('force-device-scale-factor', '1');
-
-function createMainWindow() {
+async function createMainWindow() {
+    const isDev = (await import('electron-is-dev')).default;
+    
     const mainWindow = new BrowserWindow({
         width: 800,
         height: 600,
         minWidth: 800,
         minHeight: 600,
         frame: false,
+        icon: path.join(__dirname, '../src/assets/icon5.png'),
         webPreferences: {
             contextIsolation: true,
-            preload: path.join(__dirname, 'preload.js'),
-            zoomFactor: 1.0
+            preload: path.join(__dirname, 'preload.js')
         }
     });
 
     activateEventHandler(mainWindow);
 
-    // React 개발서버 사용을 위한 설정
-    mainWindow.loadURL('http://localhost:3000');
-    mainWindow.webContents.openDevTools();
+    if (isDev) {
+        mainWindow.loadURL('http://localhost:3000');
+        mainWindow.webContents.openDevTools();
+    } else {
+        mainWindow.loadFile(path.join(__dirname, '../build/index.html'));
+    }
 }
 
 app.whenReady().then(() => {
