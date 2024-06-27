@@ -123,9 +123,9 @@ const Drone3DView = () => {
                 }
 
             } else if (droneRef.current) { 
-                // droneRef.current.rotation.x += 0.01; //pitch - 앞으로 돈다 -
-                // droneRef.current.rotation.y += 0.01; //yaw - 왼쪽으로 돈다 -
-                // droneRef.current.rotation.z += 0.01; //roll - 오른쪽으로 돈다 +
+                droneRef.current.rotation.x += 0.01; //pitch - 앞으로 돈다 -
+                droneRef.current.rotation.y += 0.01; //yaw - 왼쪽으로 돈다 -
+                droneRef.current.rotation.z += 0.01; //roll - 오른쪽으로 돈다 +
             }
             rendererRef.current.render(sceneRef.current, cameraRef.current);
             requestAnimationFrame(animate);

@@ -75,6 +75,10 @@
     "electron-builder": "^24.13.3",
     "wait-on": "^7.2.0"
   },
+  "repository":{
+    "type": "git",
+    "url": "https://github.com/Hyunnn2/Capstone_NOVA.git"
+  },
   "main": "public/electron.js",
   "homepage": "./",
   "build": {
